@@ -11,10 +11,12 @@ class LandingPage extends Component {
   }
   
   render() {
-    const { handleLogoutClick } = this.props 
+    const { handleLogoutClick, userObject } = this.props
+    console.log(userObject) 
     return(
       <>
-        <Header as='h1'>Welcome to geogra.me</Header>
+        <Header as='h1'>Welcome to geogra.me {userObject.displayName}</Header>
+        {/* Add user image? */}
         <Button onClick={handleLogoutClick}>Sign Out</Button>
 
         <MyMapComponent

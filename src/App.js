@@ -11,6 +11,16 @@ class App extends Component {
     user: {}
   }
   
+  componentDidMount() {
+    fireApp.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({
+          isLoggedIn: true,
+          user
+        })
+      } 
+    })
+  }
 
   handleSignInButtonClick = e => {
     e.preventDefault()
@@ -49,6 +59,7 @@ class App extends Component {
       <div className="App">
         {this.state.isLoggedIn ? 
         <LandingPage 
+          userObject={this.state.user}
           handleLogoutClick={e => this.handleSignOutButtonClick(e)}
         /> : 
         <LoginPage 

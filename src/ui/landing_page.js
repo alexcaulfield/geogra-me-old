@@ -3,6 +3,7 @@ import MyMapComponent from './map_component';
 import {cities} from './../mock_data/cities';
 import { Header } from 'semantic-ui-react';
 import Autocomplete from 'react-google-autocomplete';
+import { Button } from 'semantic-ui-react'
 
 class LandingPage extends Component {
   state = {
@@ -10,9 +11,11 @@ class LandingPage extends Component {
   }
   
   render() {
+    const { handleLogoutClick } = this.props 
     return(
       <>
         <Header as='h1'>Welcome to geogra.me</Header>
+        <Button onClick={handleLogoutClick}>Sign Out</Button>
 
         <MyMapComponent
           isMarkerShown

@@ -2,16 +2,59 @@ import React, {Component} from 'react';
 import './App.css';
 import LandingPage from './ui/landing_page'
 import LoginPage from './ui/login'
+import fireApp from './fire-config'
+import * as firebase from 'firebase'
 
 class App extends Component {
   state = {
-    isLoggedIn: false
+    isLoggedIn: false,
+    user: {}
   }
   
+
+  handleSignInButtonClick = e => {
+    e.preventDefault()
+    const googleProvider = new firebase.auth.GoogleAuthProvider()
+    fireApp.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+      fireApp.auth().signInWithPopup(googleProvider).then(result => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        this.setState({
+          isLoggedIn: true,
+          user
+        })
+      }).catch(function(error) {
+        const {code, message, email} = error
+        console.log(`Error logging in with code ${code} for user ${email} with message ${message}`)
+      });
+    })
+  }
+
+  handleSignOutButtonClick = e => {
+    e.preventDefault()
+    fireApp.auth().signOut().then(() => {
+      this.setState({
+        isLoggedIn: false,
+        user: {}
+      })
+    }).catch(function(error) {
+      console.log(error)
+    });
+  }
+
   render() {
     return (
       <div className="App">
-        {this.state.isLoggedIn ? <LandingPage /> : <LoginPage />}
+        {this.state.isLoggedIn ? 
+        <LandingPage 
+          handleLogoutClick={e => this.handleSignOutButtonClick(e)}
+        /> : 
+        <LoginPage 
+          handleLoginClick={e => this.handleSignInButtonClick(e)} 
+        />
+        }
       </div>
     );
   }

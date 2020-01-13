@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import LandingPage from './ui/landing_page'
-import { ThemeProvider, theme } from '@chakra-ui/core';
+import LoginPage from './ui/login'
 
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
+class App extends Component {
+  state = {
+    isLoggedIn: false
+  }
+  
+  render() {
+    return (
       <div className="App">
-        <LandingPage />
+        {this.state.isLoggedIn ? <LandingPage /> : <LoginPage />}
       </div>
-    </ThemeProvider>
-  );
+    );
+  }
 }
 
 export default App;

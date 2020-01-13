@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MyMapComponent from './map_component';
 import {cities} from './../mock_data/cities';
-import { Text } from "@chakra-ui/core";
+import { Header } from 'semantic-ui-react';
 import Autocomplete from 'react-google-autocomplete';
 
 class LandingPage extends Component {
@@ -12,7 +12,7 @@ class LandingPage extends Component {
   render() {
     return(
       <>
-        <Text fontSize="4xl">Welcome to geogra.me</Text>
+        <Header as='h1'>Welcome to geogra.me</Header>
 
         <MyMapComponent
           isMarkerShown
@@ -23,7 +23,7 @@ class LandingPage extends Component {
           listOfCities={cities}
         />
 
-        <Text fontSize="4xl">Where have you been?</Text>
+        <Header as='h2'>Where have you been?</Header>
 
         <Autocomplete
           style={{width: '90%'}}

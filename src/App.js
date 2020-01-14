@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import './App.css';
 import LandingPage from './ui/landing_page'
 import LoginPage from './ui/login'
-import fireApp from './fire-config'
+import {fireApp, db} from './fire-config'
 import * as firebase from 'firebase'
+import { USERS_COLLECTION } from './utils'
 
 class App extends Component {
   state = {
@@ -35,6 +36,21 @@ class App extends Component {
           isLoggedIn: true,
           user
         })
+        // insert user into DB if they don't already exist
+        const docRef = db.collection(USERS_COLLECTION).doc(user.email)
+        docRef.get().then((doc) => {
+          if (doc.exists) {
+            console.log('user already exists')
+          } else {
+            // insert into user collection
+            docRef.set({
+              name: user.displayName,
+              email: user.email,
+              placesBeen: [],
+              placesToGo: [],
+            })
+          }
+        }).catch((error) => console.log("Error getting document:", error))
       }).catch(function(error) {
         const {code, message, email} = error
         console.log(`Error logging in with code ${code} for user ${email} with message ${message}`)

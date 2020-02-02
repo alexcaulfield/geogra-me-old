@@ -1,7 +1,7 @@
 export const cities = [
   {
     name: 'paris',
-    location: { lat: 48.8566, lng: 2.3522 }
+    location: { lat: 48.85, lng: 2.35 }
   },
   {
     name: 'lisbon',

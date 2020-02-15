@@ -23,6 +23,10 @@ class App extends Component {
     })
   }
 
+  createUsername = (displayName) => {
+    return displayName.split(' ')[0] + Math.floor((Math.random() * 100000) + 1);
+  }
+
   handleSignInButtonClick = e => {
     e.preventDefault()
     const googleProvider = new firebase.auth.GoogleAuthProvider()
@@ -46,6 +50,8 @@ class App extends Component {
             docRef.set({
               name: user.displayName,
               email: user.email,
+              username: this.createUsername(user.displayName),
+              signUpDate: new Date(),
               placesBeen: [],
               placesToGo: [],
             })

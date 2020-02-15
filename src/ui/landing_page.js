@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import MyMapComponent from './map_component';
+import TravelStatsCard from './travel_stats_card';
 import { Header, Dropdown, Button } from 'semantic-ui-react';
 import {db} from './../fire-config'
 import { USERS_COLLECTION } from './../utils'
@@ -10,14 +11,19 @@ class LandingPage extends Component {
   state = {
     locationToAdd: '',
     placesBeen: [],
+    placesToGo: [],
     // pull user data from db based on email
     userDocIdentifier: this.props.userObject.email,
     beenToButtonClicked: false,
     wantToGoButtonClicked: false,
+    shouldRenderPlacesBeen: true,
+    shouldRenderPlacesToGo: false,
+    countries: []
   }
 
   componentDidMount() {
     this.renderMapData()
+    this.getCountryData()
   }
 
   renderMapData = () => {
@@ -25,12 +31,28 @@ class LandingPage extends Component {
       if (doc.exists) {
         const data = doc.data()
         this.setState({
-          placesBeen: data.placesBeen
+          placesBeen: data.placesBeen,
+          placesToGo: data.placesToGo,
         })
       } else {
         console.log(`there was an error in fetching data for user ${this.state.userDocIdentifier}`)
       }
     }).catch((error) => console.log("Error getting document:", error))
+  }
+
+  getCountryData = () => {
+    fetch('https://restcountries.eu/rest/v2/all')
+        .then(response => {
+          return response.json()
+        }).then(response => {
+          this.setState({
+            countries: response.map(country => country.name)
+          })
+    })
+  }
+
+  getCountryNumber = () => {
+    return 20;
   }
 
   handleAddLocationToDB = () => {
@@ -85,6 +107,20 @@ class LandingPage extends Component {
     })
   }
 
+  handleSeePlacesToGo = () => {
+    this.setState({
+      shouldRenderPlacesBeen: false,
+      shouldRenderPlacesToGo: true,
+    })
+  }
+
+  handleSeePlacesBeen = () => {
+    this.setState({
+      shouldRenderPlacesBeen: true,
+      shouldRenderPlacesToGo: false,
+    })
+  }
+
   handleInputChange = (value) => {
     this.setState({
       locationToAdd: value
@@ -107,6 +143,12 @@ class LandingPage extends Component {
         {/* Add user image? */}
         <Button onClick={handleLogoutClick}>Sign Out</Button>
 
+        <Button.Group>
+          <Button positive onClick={this.handleSeePlacesBeen}>Show Places Been</Button>
+          <Button.Or text='Or' />
+          <Button onClick={this.handleSeePlacesToGo}>Show Places to Go</Button>
+        </Button.Group>
+
         {this.state.placesBeen &&
           <MyMapComponent
             isMarkerShown
@@ -114,7 +156,7 @@ class LandingPage extends Component {
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={<div style={{ height: `400px` }} />}
             mapElement={<div style={{ height: `100%` }} />}
-            listOfCities={this.state.placesBeen}
+            listOfCities={this.state.shouldRenderPlacesBeen ? this.state.placesBeen : this.state.placesToGo}
           />
         }
 
@@ -165,6 +207,12 @@ class LandingPage extends Component {
           <Button.Or />
           <Button onClick={this.handleWantToGoClick}>Want To Go!</Button>
         </Button.Group>
+
+        <TravelStatsCard
+          name={userObject.displayName}
+          dateJoined={userObject.signUpDate}
+          countriesBeen={this.getCountryNumber()}
+        />
       </>
     )
   }

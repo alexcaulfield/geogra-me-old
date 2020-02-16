@@ -9391,6 +9391,11 @@ react-scripts@3.0.1:
   optionalDependencies:
     fsevents "2.0.6"
 
+react-sticky-footer@^0.1.0-rc3:
+  version "0.1.0-rc3"
+  resolved "https://registry.yarnpkg.com/react-sticky-footer/-/react-sticky-footer-0.1.0-rc3.tgz#47137e332cafcf49a48561894aa410cca683b3af"
+  integrity sha512-FKXTCQxLoRhSC0ReEbpE52jqzMcLSYcSJjPQrx8spDGBDp3IWiyo7c1Slibsut4UmHLWG6UUA1sUCDmSAFU43Q==
+
 react-transition-group@^4.0.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.3.0.tgz#fea832e386cf8796c58b61874a3319704f5ce683"

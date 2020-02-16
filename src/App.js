@@ -5,6 +5,7 @@ import LoginPage from './ui/login'
 import {fireApp, db} from './fire-config'
 import * as firebase from 'firebase'
 import { USERS_COLLECTION } from './utils'
+import {Header, Segment, Icon} from 'semantic-ui-react'
 
 class App extends Component {
   state = {
@@ -78,16 +79,36 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        {this.state.isLoggedIn ? 
-        <LandingPage 
-          userObject={this.state.user}
-          handleLogoutClick={e => this.handleSignOutButtonClick(e)}
-        /> : 
-        <LoginPage 
-          handleLoginClick={e => this.handleSignInButtonClick(e)} 
-        />
-        }
+      <div
+        className="App"
+        style={{
+          display: 'flex',
+          minHeight: '100vh',
+          flexDirection: 'column',
+        }}
+      >
+        <div style={{
+          flex: 1,
+        }}>
+          {this.state.isLoggedIn ?
+            (<LandingPage
+              userObject={this.state.user}
+              handleLogoutClick={e => this.handleSignOutButtonClick(e)}
+            />) :
+            (<LoginPage
+              handleLoginClick={e => this.handleSignInButtonClick(e)}
+            />)
+          }
+        </div>
+        <Segment>
+          <Header as='h4'>© {new Date().getFullYear()} Alex Caulfield</Header>
+          <span>
+            Any questions? Leave a comment on <a href='https://github.com/alexcaulfield/geogra-me/issues'><Icon link name='github' size='large'/></a>
+          </span>
+          <span>
+            or contact Alex on <a href='https://www.linkedin.com/in/alexandercaulfield/'><Icon link name='linkedin' size='large'/></a>
+          </span>
+        </Segment>
       </div>
     );
   }

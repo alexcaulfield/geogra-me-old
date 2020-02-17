@@ -58,6 +58,9 @@ class LandingPage extends Component {
                 lat,
                 lng
               },
+            }),
+            countriesBeen: firebase.firestore.FieldValue.arrayUnion({
+              country
             })
           }
         } else if (this.state.wantToGoButtonClicked) {
@@ -70,12 +73,6 @@ class LandingPage extends Component {
               },
             })
           }
-        }
-        objToAdd = {
-          ...objToAdd,
-          countriesBeen: firebase.firestore.FieldValue.arrayUnion({
-            country
-          })
         }
         db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update(objToAdd)
         .then(() => {

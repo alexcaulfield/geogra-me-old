@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import './App.css';
 import LandingPage from './ui/landing_page'
 import LoginPage from './ui/login'
+import Footer from "./ui/footer"
 import {fireApp, db} from './fire-config'
 import * as firebase from 'firebase'
 import { USERS_COLLECTION } from './utils'
-import {Header, Segment, Icon} from 'semantic-ui-react'
 
 class App extends Component {
   state = {
@@ -44,9 +44,7 @@ class App extends Component {
         // insert user into DB if they don't already exist
         const docRef = db.collection(USERS_COLLECTION).doc(user.email)
         docRef.get().then((doc) => {
-          if (doc.exists) {
-            console.log('user already exists')
-          } else {
+          if (!doc.exists) {
             // insert into user collection
             docRef.set({
               name: user.displayName,
@@ -100,15 +98,7 @@ class App extends Component {
             />)
           }
         </div>
-        <Segment>
-          <Header as='h4'>© {new Date().getFullYear()} Alex Caulfield</Header>
-          <span>
-            Any questions? Leave a comment on <a href='https://github.com/alexcaulfield/geogra-me/issues'><Icon link name='github' size='large'/></a>
-          </span>
-          <span>
-            or contact Alex on <a href='https://www.linkedin.com/in/alexandercaulfield/'><Icon link name='linkedin' size='large'/></a>
-          </span>
-        </Segment>
+        <Footer />
       </div>
     );
   }

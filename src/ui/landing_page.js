@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import MyMapComponent from './map_component';
 import TravelStatsCard from './travel_stats_card';
-import { Header, Dropdown, Button } from 'semantic-ui-react';
+import UiHeader from './header';
+import { Header, Dropdown, Button, Grid } from 'semantic-ui-react';
 import {db} from './../fire-config'
 import { USERS_COLLECTION } from './../utils'
 import PlacesAutocomplete, {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
@@ -14,7 +15,7 @@ class LandingPage extends Component {
     placesToGo: [],
     // pull user data from db based on email
     userDocIdentifier: this.props.userObject.email,
-    beenToButtonClicked: false,
+    beenToButtonClicked: true,
     wantToGoButtonClicked: false,
     shouldRenderPlacesBeen: true,
     shouldRenderPlacesToGo: false,
@@ -139,80 +140,123 @@ class LandingPage extends Component {
     const { handleLogoutClick, userObject } = this.props
     return(
       <>
-        <Header as='h1'>Welcome to geogra.me {userObject.displayName}</Header>
-        {/* Add user image? */}
-        <Button onClick={handleLogoutClick}>Sign Out</Button>
-
-        <Button.Group>
-          <Button positive onClick={this.handleSeePlacesBeen}>Show Places Been</Button>
-          <Button.Or text='Or' />
-          <Button onClick={this.handleSeePlacesToGo}>Show Places to Go</Button>
-        </Button.Group>
-
-        {this.state.placesBeen &&
+        <UiHeader
+          name={userObject.displayName}
+          photoSrc={userObject.photoURL}
+          handleLogoutClick={handleLogoutClick}
+        />
+        <div style={{
+          marginTop: '30px'
+        }}>
           <MyMapComponent
             isMarkerShown
             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAq-bT8CcgFTuTQZjkjLCRFSawl4k9jJ_Q&libraries=geometry,drawing,places"
             loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `400px` }} />}
+            containerElement={<div style={{ height: `700px` }} />}
             mapElement={<div style={{ height: `100%` }} />}
             listOfCities={this.state.shouldRenderPlacesBeen ? this.state.placesBeen : this.state.placesToGo}
           />
-        }
 
+          <div style={{
+            marginTop: '40px'
+          }}>
+            <Grid columns={3} divided>
+              <Grid.Row>
+                <Grid.Column>
+                  <div style={{
+                    paddingLeft: '20%'
+                  }}>
+                    <TravelStatsCard
+                      name={userObject.displayName}
+                      dateJoined={userObject.signUpDate}
+                      countriesBeen={this.getCountryNumber()}
+                    />
+                  </div>
+                </Grid.Column>
+                <Grid.Column>
+                  <Header as='h2'>Add a Place to Your Map</Header>
 
-        <Header as='h2'>Where have you been?</Header>
-
-        <PlacesAutocomplete
-          value={this.state.locationToAdd}
-          onChange={this.handleInputChange}
-          onSelect={this.handlePlaceSelect}
-        >
-          {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-              <div>
-                <input
-                    {...getInputProps({
-                      placeholder: 'Search Places ...',
-                      className: 'location-search-input',
-                    })}
-                />
-                <div className="autocomplete-dropdown-container">
-                  {loading && <div>Loading...</div>}
-                  {suggestions.map(suggestion => {
-                    const className = suggestion.active
-                        ? 'suggestion-item--active'
-                        : 'suggestion-item';
-                    // inline style for demonstration purpose
-                    const style = suggestion.active
-                        ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                    return (
-                        <div
-                            {...getSuggestionItemProps(suggestion, {
-                              className,
-                              style,
-                            })}
-                        >
-                          <span>{suggestion.description}</span>
+                  <PlacesAutocomplete
+                    value={this.state.locationToAdd}
+                    onChange={this.handleInputChange}
+                    onSelect={this.handlePlaceSelect}
+                  >
+                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                      <div>
+                        <input
+                          {...getInputProps({
+                            placeholder: 'Search Places ...',
+                            className: 'location-search-input',
+                          })}
+                        />
+                        <div className="autocomplete-dropdown-container">
+                          {loading && <div>Loading...</div>}
+                          {suggestions.map(suggestion => {
+                            const className = suggestion.active
+                              ? 'suggestion-item--active'
+                              : 'suggestion-item';
+                            // inline style for demonstration purpose
+                            const style = suggestion.active
+                              ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                              : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                            return (
+                              <div
+                                {...getSuggestionItemProps(suggestion, {
+                                  className,
+                                  style,
+                                })}
+                              >
+                                <span>{suggestion.description}</span>
+                              </div>
+                            );
+                          })}
                         </div>
-                    );
-                  })}
-                </div>
-              </div>
-          )}
-        </PlacesAutocomplete>
+                      </div>
+                    )}
+                  </PlacesAutocomplete>
 
-        <Button.Group>
-          <Button onClick={this.handleBeenToClick}>Been To</Button>
-          <Button.Or />
-          <Button onClick={this.handleWantToGoClick}>Want To Go!</Button>
-        </Button.Group>
+                  <Button.Group>
+                    <Button
+                      active={this.state.beenToButtonClicked}
+                      onClick={this.handleBeenToClick}
+                    >
+                      Been To
+                    </Button>
+                    <Button.Or />
+                    <Button
+                      active={this.state.wantToGoButtonClicked}
+                      onClick={this.handleWantToGoClick}
+                    >
+                      Want To Go!
+                    </Button>
+                  </Button.Group>
+                </Grid.Column>
 
-        <TravelStatsCard
-          name={userObject.displayName}
-          dateJoined={userObject.signUpDate}
-          countriesBeen={this.getCountryNumber()}
-        />
+                <Grid.Column>
+                  <div style={{
+                    paddingTop: '5%'
+                  }}>
+                    <Button.Group>
+                      <Button
+                        active={this.state.shouldRenderPlacesBeen}
+                        onClick={this.handleSeePlacesBeen}
+                      >
+                        Show Places Been
+                      </Button>
+                      <Button.Or text='Or' />
+                      <Button
+                        active={this.state.shouldRenderPlacesToGo}
+                        onClick={this.handleSeePlacesToGo}
+                      >
+                        Show Places to Go
+                      </Button>
+                    </Button.Group>
+                  </div>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </div>
+        </div>
       </>
     )
   }

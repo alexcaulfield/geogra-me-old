@@ -1,12 +1,11 @@
 import React from 'react'
 import { Card } from 'semantic-ui-react'
 
-const TravelStatsCard = ({name, dateJoined, countriesBeen}) => {
+const TravelStatsCard = ({name, countriesBeen}) => {
     return (
         <Card>
             <Card.Content>
-                <Card.Header>{name}</Card.Header>
-                <Card.Meta>{name} has been on Geogra.me since {dateJoined}</Card.Meta>
+                <Card.Header>Stats</Card.Header>
                 <Card.Description>
                     {name} has been to {countriesBeen} countries!
                 </Card.Description>

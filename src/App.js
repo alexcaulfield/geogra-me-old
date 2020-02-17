@@ -50,9 +50,9 @@ class App extends Component {
               name: user.displayName,
               email: user.email,
               username: this.createUsername(user.displayName),
-              signUpDate: new Date(),
               placesBeen: [],
               placesToGo: [],
+              countriesBeen: []
             })
           }
         }).catch((error) => console.log("Error getting document:", error))

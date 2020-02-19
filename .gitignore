@@ -24,4 +24,4 @@ yarn-error.log*
 
 # don't add
 /src/server
-/src/fire-config.js
+.env

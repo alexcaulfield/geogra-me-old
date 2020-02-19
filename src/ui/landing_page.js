@@ -7,6 +7,7 @@ import { Header, Button, Grid, Icon } from 'semantic-ui-react';
 import {db} from './../fire-config'
 import { USERS_COLLECTION } from './../utils'
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
+import {isMobile} from 'react-device-detect';
 import * as firebase from 'firebase'
 
 class LandingPage extends Component {
@@ -59,9 +60,7 @@ class LandingPage extends Component {
                 lng
               },
             }),
-            countriesBeen: firebase.firestore.FieldValue.arrayUnion({
-              country
-            })
+            countriesBeen: firebase.firestore.FieldValue.arrayUnion(country)
           }
         } else if (this.state.wantToGoButtonClicked) {
           objToAdd = {
@@ -155,17 +154,20 @@ class LandingPage extends Component {
           }}>
             <Grid columns={3} divided>
               <Grid.Row>
-                <Grid.Column>
-                  <div style={{
-                    paddingLeft: '20%'
-                  }}>
-                    <TravelStatsCard
-                      name={userObject.displayName}
-                      countriesBeen={this.state.countriesBeen}
-                    />
-                  </div>
-                </Grid.Column>
-                <Grid.Column>
+                {!isMobile &&
+                  <Grid.Column>
+                    <div style={{
+                      paddingLeft: '20%'
+                    }}>
+                      <TravelStatsCard
+                        name={userObject.displayName}
+                        countriesBeen={this.state.countriesBeen}
+                      />
+                    </div>
+                  </Grid.Column>
+                }
+
+                <Grid.Column width={isMobile ? 16 : 5}>
                   <Header as='h2'>Add a Place to Your Map</Header>
 
                   <Autocomplete
@@ -202,27 +204,29 @@ class LandingPage extends Component {
                   </Grid>
                 </Grid.Column>
 
-                <Grid.Column>
-                  <div style={{
-                    paddingTop: '5%'
-                  }}>
-                    <Button.Group>
-                      <Button
-                        active={this.state.shouldRenderPlacesBeen}
-                        onClick={this.handleSeePlacesBeen}
-                      >
-                        Show Places Been
-                      </Button>
-                      <Button.Or text='Or' />
-                      <Button
-                        active={this.state.shouldRenderPlacesToGo}
-                        onClick={this.handleSeePlacesToGo}
-                      >
-                        Show Places to Go
-                      </Button>
-                    </Button.Group>
-                  </div>
-                </Grid.Column>
+                {!isMobile &&
+                  <Grid.Column>
+                    <div style={{
+                      paddingTop: '5%'
+                    }}>
+                      <Button.Group>
+                        <Button
+                          active={this.state.shouldRenderPlacesBeen}
+                          onClick={this.handleSeePlacesBeen}
+                        >
+                          Show Places Been
+                        </Button>
+                        <Button.Or text='Or' />
+                        <Button
+                          active={this.state.shouldRenderPlacesToGo}
+                          onClick={this.handleSeePlacesToGo}
+                        >
+                          Show Places to Go
+                        </Button>
+                      </Button.Group>
+                    </div>
+                  </Grid.Column>
+                }
               </Grid.Row>
             </Grid>
           </div>

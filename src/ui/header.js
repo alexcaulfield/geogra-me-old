@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Segment, Menu, Container, Header, Icon, Image, Grid} from 'semantic-ui-react'
+import {isMobile} from 'react-device-detect';
 
 const UiHeader = ({name, photoSrc, handleLogoutClick}) => {
   return (
@@ -13,12 +14,15 @@ const UiHeader = ({name, photoSrc, handleLogoutClick}) => {
         size='large'
       >
         <Container>
-          <Menu.Item>
-            <Header>
-              <Icon name='map' /> {name}'s Map
-            </Header>
-          </Menu.Item>
-          <Menu.Item position='right'>
+          {!isMobile &&
+            <Menu.Item>
+              <Header>
+                <Icon name='map' /> {name}'s Map
+              </Header>
+            </Menu.Item>
+          }
+
+          <Menu.Item position={isMobile ? '' : 'right'}>
             <div style={{
               paddingRight: '10px'
             }}>

@@ -130,6 +130,7 @@ class LandingPage extends Component {
   
   render() {
     const { handleLogoutClick, userObject } = this.props
+    console.log(this.state.placesBeen)
     return(
       <>
         <UiHeader

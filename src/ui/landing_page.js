@@ -57,10 +57,10 @@ class LandingPage extends Component {
               name: this.state.locationToAdd,
               location: {
                 lat,
-                lng
+                lng,
               },
             }),
-            countriesBeen: firebase.firestore.FieldValue.arrayUnion(country)
+            countriesBeen: firebase.firestore.FieldValue.arrayUnion(country),
           }
         } else if (this.state.wantToGoButtonClicked) {
           objToAdd = {
@@ -68,7 +68,7 @@ class LandingPage extends Component {
               name: this.state.locationToAdd,
               location: {
                 lat,
-                lng
+                lng,
               },
             })
           }
@@ -130,7 +130,6 @@ class LandingPage extends Component {
   
   render() {
     const { handleLogoutClick, userObject } = this.props
-    console.log(this.state.placesBeen)
     return(
       <>
         <UiHeader

@@ -9,7 +9,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     defaultZoom={8}
     defaultCenter={props.listOfCities.length > 0 ? props.listOfCities[0].location : getRandomCityLocation(cities)}
   >
-    { props.listOfCities.map((city) => (<MapInfoWindowComponent position={city.location} />)) }
+    { props.listOfCities.map((city) => (<MapInfoWindowComponent city={city} />)) }
   </GoogleMap>
 ))
 

@@ -52,7 +52,8 @@ class App extends Component {
               username: this.createUsername(user.displayName),
               placesBeen: [],
               placesToGo: [],
-              countriesBeen: []
+              countriesBeen: [],
+              publicProfile: false,
             })
           }
         }).catch((error) => console.log("Error getting document:", error))

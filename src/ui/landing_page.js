@@ -23,6 +23,7 @@ class LandingPage extends Component {
     wantToGoButtonClicked: false,
     shouldRenderPlacesBeen: true,
     shouldRenderPlacesToGo: false,
+    publicProfile: this.props.userObject.publicProfile,
   }
 
   componentDidMount() {
@@ -86,6 +87,20 @@ class LandingPage extends Component {
       });
   }
 
+  handleUpdateProfilePrivacy = (e) => {
+    e.preventDefault()
+    const currentPublicProfileSetting = this.state.publicProfile
+    db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update({
+      publicProfile: !currentPublicProfileSetting
+    })
+      .then(response => {
+        this.setState({
+          publicProfile: !currentPublicProfileSetting
+        })
+      })
+      .catch(error => console.log('unable to update user profile setting'))
+  }
+
   handleBeenToClick = () => {
     this.setState({
       beenToButtonClicked: true,
@@ -136,6 +151,8 @@ class LandingPage extends Component {
           name={userObject.displayName}
           photoSrc={userObject.photoURL}
           handleLogoutClick={handleLogoutClick}
+          publicProfile={this.state.publicProfile}
+          onClickUpdateProfilePrivacy={this.handleUpdateProfilePrivacy}
         />
         <div style={{
           marginTop: '30px'

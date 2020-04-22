@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Segment, Menu, Container, Header, Icon, Image, Grid} from 'semantic-ui-react'
 import {isMobile} from 'react-device-detect';
 
-const UiHeader = ({name, photoSrc, handleLogoutClick}) => {
+const UiHeader = ({name, photoSrc, handleLogoutClick, publicProfile, onClickUpdateProfilePrivacy}) => {
   return (
     <Segment
       inverted
@@ -16,9 +16,20 @@ const UiHeader = ({name, photoSrc, handleLogoutClick}) => {
         <Container>
           {!isMobile &&
             <Menu.Item>
-              <Header>
-                <Icon name='map' /> {name}'s Map
-              </Header>
+              <Grid.Column style={{
+                paddingRight: '10px'
+              }}>
+                <Header>
+                  <Icon name='map' /> {name}'s Map
+                </Header>
+              </Grid.Column>
+              <Grid.Column>
+                <Button.Group>
+                  <Button positive={publicProfile} icon='lock open' onClick={onClickUpdateProfilePrivacy}/>
+                  <Button.Or />
+                  <Button positive={!publicProfile} icon='lock' onClick={onClickUpdateProfilePrivacy}/>
+                </Button.Group>
+              </Grid.Column>
             </Menu.Item>
           }
 

@@ -87,6 +87,7 @@ class LandingPage extends Component {
       });
   }
 
+
   handleUpdateProfilePrivacy = (e) => {
     e.preventDefault()
     const currentPublicProfileSetting = this.state.publicProfile
@@ -99,6 +100,32 @@ class LandingPage extends Component {
         })
       })
       .catch(error => console.log('unable to update user profile setting'))
+  }
+
+  deletePlace = (placeToDelete) => {
+    if (this.state.beenToButtonClicked) {
+      const updatedPlacesBeen = this.state.placesBeen.filter(place => place.name !== placeToDelete.name)
+      db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update({
+        placesBeen: updatedPlacesBeen
+      })
+        .then(response => {
+          this.setState({
+            placesBeen: updatedPlacesBeen
+          })
+        })
+        .catch(error => console.log(error))
+    } else if (this.state.placesToGo) {
+      const updatedPlacesToGo = this.state.placesToGo.filter(place => place.name !== placeToDelete.name)
+      db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update({
+        placesToGo: updatedPlacesToGo
+      })
+        .then(response => {
+          this.setState({
+            placesToGo: updatedPlacesToGo
+          })
+        })
+        .catch(error => console.log(error))
+    }
   }
 
   handleBeenToClick = () => {
@@ -164,6 +191,7 @@ class LandingPage extends Component {
             containerElement={<div style={{ height: `700px` }} />}
             mapElement={<div style={{ height: `100%` }} />}
             listOfCities={this.state.shouldRenderPlacesBeen ? this.state.placesBeen : this.state.placesToGo}
+            deletePlace={this.deletePlace}
           />
 
           <div style={{

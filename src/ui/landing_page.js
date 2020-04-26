@@ -46,8 +46,12 @@ class LandingPage extends Component {
   }
 
   handleAddLocationToDB = () => {
+    let locationObj = {}
     geocodeByAddress(this.state.locationToAdd)
-      .then(results => getLatLng(results[0]))
+      .then(results => {
+        locationObj = results[0];
+        return getLatLng(results[0])
+      })
       .then(({ lat, lng }) => {
         let objToAdd = {};
         const locationSplit = this.state.locationToAdd.split(', ')
@@ -60,6 +64,7 @@ class LandingPage extends Component {
                 lat,
                 lng,
               },
+              placeId: locationObj.place_id,
             }),
             countriesBeen: firebase.firestore.FieldValue.arrayUnion(country),
           }
@@ -71,6 +76,7 @@ class LandingPage extends Component {
                 lat,
                 lng,
               },
+              placeId: locationObj.place_id,
             })
           }
         }
@@ -103,7 +109,7 @@ class LandingPage extends Component {
   }
 
   deletePlace = (placeToDelete) => {
-    if (this.state.beenToButtonClicked) {
+    if (this.state.shouldRenderPlacesBeen) {
       const updatedPlacesBeen = this.state.placesBeen.filter(place => place.name !== placeToDelete.name)
       db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update({
         placesBeen: updatedPlacesBeen
@@ -114,7 +120,7 @@ class LandingPage extends Component {
           })
         })
         .catch(error => console.log(error))
-    } else if (this.state.placesToGo) {
+    } else if (this.state.shouldRenderPlacesToGo) {
       const updatedPlacesToGo = this.state.placesToGo.filter(place => place.name !== placeToDelete.name)
       db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update({
         placesToGo: updatedPlacesToGo

@@ -5,12 +5,14 @@ import { getRandomCityLocation } from './../utils'
 import MapInfoWindowComponent from './map_info_window_component'
 
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
-  <GoogleMap
-    defaultZoom={8}
-    defaultCenter={props.listOfCities.length > 0 ? props.listOfCities[0].location : getRandomCityLocation(cities)}
-  >
-    { props.listOfCities.map((city) => (<MapInfoWindowComponent city={city} deletePlace={props.deletePlace}/>)) }
-  </GoogleMap>
+  <div id='map'>
+    <GoogleMap
+      defaultZoom={8}
+      defaultCenter={props.listOfCities.length > 0 ? props.listOfCities[0].location : getRandomCityLocation(cities)}
+    >
+      { props.listOfCities.map((city) => (<MapInfoWindowComponent city={city} deletePlace={props.deletePlace}/>)) }
+    </GoogleMap>
+  </div>
 ))
 
 export default MyMapComponent;

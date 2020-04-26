@@ -108,8 +108,8 @@ class LandingPage extends Component {
       .catch(error => console.log('unable to update user profile setting'))
   }
 
-  deletePlace = (placeToDelete) => {
-    if (this.state.shouldRenderPlacesBeen) {
+  deletePlace = (placeToDelete, placeToGo, placeBeen) => {
+    if (placeBeen) {
       const updatedPlacesBeen = this.state.placesBeen.filter(place => place.name !== placeToDelete.name)
       db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update({
         placesBeen: updatedPlacesBeen
@@ -120,7 +120,7 @@ class LandingPage extends Component {
           })
         })
         .catch(error => console.log(error))
-    } else if (this.state.shouldRenderPlacesToGo) {
+    } else if (placeToGo) {
       const updatedPlacesToGo = this.state.placesToGo.filter(place => place.name !== placeToDelete.name)
       db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update({
         placesToGo: updatedPlacesToGo
@@ -132,6 +132,29 @@ class LandingPage extends Component {
         })
         .catch(error => console.log(error))
     }
+  }
+
+  moveToPlacesBeen = (placeToMove, placeToGo, placeBeen) => {
+    const locationSplit = placeToMove.name.split(', ')
+    const country = locationSplit[locationSplit.length - 1]
+    this.deletePlace(placeToMove, placeToGo, placeBeen)
+    const objToAdd = {
+      placesBeen: firebase.firestore.FieldValue.arrayUnion({
+        name: placeToMove.name,
+        location: {
+          lat: placeToMove.location.lat,
+          lng: placeToMove.location.lng,
+        },
+        placeId: placeToMove.placeId ? placeToMove.placeId : '',
+      }),
+      countriesBeen: firebase.firestore.FieldValue.arrayUnion(country),
+    }
+    db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update(objToAdd)
+      .then(() => {
+        this.renderMapData()
+      }).catch((error) => {
+      console.log(`error saving document ${error}`)
+    })
   }
 
   handleBeenToClick = () => {
@@ -197,7 +220,10 @@ class LandingPage extends Component {
             containerElement={<div style={{ height: `700px` }} />}
             mapElement={<div style={{ height: `100%` }} />}
             listOfCities={this.state.shouldRenderPlacesBeen ? this.state.placesBeen : this.state.placesToGo}
+            shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
+            shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
             deletePlace={this.deletePlace}
+            moveToPlacesBeen={this.moveToPlacesBeen}
           />
 
           <div style={{

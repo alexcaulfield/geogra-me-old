@@ -10,7 +10,15 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
       defaultZoom={8}
       defaultCenter={props.listOfCities.length > 0 ? props.listOfCities[0].location : getRandomCityLocation(cities)}
     >
-      { props.listOfCities.map((city) => (<MapInfoWindowComponent city={city} deletePlace={props.deletePlace}/>)) }
+      { props.listOfCities.map((city) => (
+        <MapInfoWindowComponent
+          city={city}
+          deletePlace={props.deletePlace}
+          shouldRenderPlacesBeen={props.shouldRenderPlacesBeen}
+          shouldRenderPlacesToGo={props.shouldRenderPlacesToGo}
+          moveToPlacesBeen={props.moveToPlacesBeen}
+        />
+        )) }
     </GoogleMap>
   </div>
 ))

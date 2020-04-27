@@ -92,7 +92,9 @@ class LandingPage extends Component {
             mapCenter: {
               lat: lat,
               lng: lng,
-            }
+            },
+            shouldRenderPlacesBeen: this.state.beenToButtonClicked,
+            shouldRenderPlacesToGo: this.state.wantToGoButtonClicked,
           }, () => {
             this.renderMapData()
           })
@@ -172,7 +174,9 @@ class LandingPage extends Component {
           mapCenter: {
             lat: placeToMove.location.lat,
             lng: placeToMove.location.lng,
-          }
+          },
+          shouldRenderPlacesBeen: true,
+          shouldRenderPlacesToGo: false,
         }, () => {
           this.renderMapData()
         })

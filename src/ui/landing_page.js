@@ -24,6 +24,10 @@ class LandingPage extends Component {
     shouldRenderPlacesBeen: true,
     shouldRenderPlacesToGo: false,
     publicProfile: this.props.userObject.publicProfile,
+    mapCenter: { // default to Boston
+      lat: 42.3601,
+      lng: -71.0589
+    },
   }
 
   componentDidMount() {
@@ -82,10 +86,15 @@ class LandingPage extends Component {
         }
         db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update(objToAdd)
         .then(() => {
-          this.renderMapData()
           this.setState({
             locationToAdd: '',
             searchQuery: '',
+            mapCenter: {
+              lat: lat,
+              lng: lng,
+            }
+          }, () => {
+            this.renderMapData()
           })
         }).catch((error) => {
           console.log(`error saving document ${error}`)
@@ -116,7 +125,11 @@ class LandingPage extends Component {
       })
         .then(response => {
           this.setState({
-            placesBeen: updatedPlacesBeen
+            placesBeen: updatedPlacesBeen,
+            mapCenter: {
+              lat: placeToDelete.location.lat,
+              lng: placeToDelete.location.lng,
+            }
           })
         })
         .catch(error => console.log(error))
@@ -127,7 +140,11 @@ class LandingPage extends Component {
       })
         .then(response => {
           this.setState({
-            placesToGo: updatedPlacesToGo
+            placesToGo: updatedPlacesToGo,
+            mapCenter: {
+              lat: placeToGo.location.lat,
+              lng: placeToGo.location.lng,
+            }
           })
         })
         .catch(error => console.log(error))
@@ -151,7 +168,14 @@ class LandingPage extends Component {
     }
     db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update(objToAdd)
       .then(() => {
-        this.renderMapData()
+        this.setState({
+          mapCenter: {
+            lat: placeToMove.location.lat,
+            lng: placeToMove.location.lng,
+          }
+        }, () => {
+          this.renderMapData()
+        })
       }).catch((error) => {
       console.log(`error saving document ${error}`)
     })
@@ -224,6 +248,7 @@ class LandingPage extends Component {
             shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
             deletePlace={this.deletePlace}
             moveToPlacesBeen={this.moveToPlacesBeen}
+            mapCenter={this.state.mapCenter}
           />
 
           <div style={{

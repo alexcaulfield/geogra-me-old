@@ -10,7 +10,7 @@ const splitCity = fullName => {
   return [fullName, '']
 }
 
-const InfoWindowCard = ({city, country, deletePlace, cityObj, imgUrl, isPlaceToGo, isPlaceBeen, moveToPlacesBeen}) => (
+const InfoWindowCard = ({city, country, deletePlace, cityObj, imgUrl, isPlaceToGo, isPlaceBeen, moveToPlacesBeen, setIsOpen}) => (
   <Card>
     <Card.Content>
       <Card.Header>{city}</Card.Header>
@@ -22,7 +22,10 @@ const InfoWindowCard = ({city, country, deletePlace, cityObj, imgUrl, isPlaceToG
       </Card.Description>
       <Card.Content extra>
         <div style={{paddingBottom: '10px'}}>
-          <Button content='Delete this place' icon='delete' onClick={() => deletePlace(cityObj, isPlaceToGo, isPlaceBeen)} />
+          <Button content='Delete this place' icon='delete' onClick={() => {
+            deletePlace(cityObj, isPlaceToGo, isPlaceBeen)
+            setIsOpen(false)
+          }} />
         </div>
         {isPlaceToGo && (
           <Button content="I've been to this place!" icon='check' onClick={() => moveToPlacesBeen(cityObj, isPlaceToGo, isPlaceBeen)} />
@@ -70,6 +73,7 @@ const MapInfoWindowComponent = ({city, deletePlace, shouldRenderPlacesBeen, shou
             isPlaceToGo={shouldRenderPlacesToGo}
             isPlaceBeen={shouldRenderPlacesBeen}
             moveToPlacesBeen={moveToPlacesBeen}
+            setIsOpen={setIsOpen}
           />
         </InfoWindow>
       )}

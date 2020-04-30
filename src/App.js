@@ -31,7 +31,7 @@ class App extends Component {
   handleSignInButtonClick = e => {
     e.preventDefault()
     const googleProvider = new firebase.auth.GoogleAuthProvider()
-    fireApp.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+    fireApp.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
       fireApp.auth().signInWithPopup(googleProvider).then(result => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         var token = result.credential.accessToken;

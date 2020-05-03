@@ -6,7 +6,7 @@ import Logo from '../img/geograme-logo-square.png'
 import useWindowDimensions from './useWindowDimensions'
 
 const LoginPage = ({handleLoginClick}) => {
-  const {height, width} = useWindowDimensions();
+  const {width} = useWindowDimensions();
   const getLogoWidth = () => {
     if (isMobile) {
       return 16

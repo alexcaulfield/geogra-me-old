@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
-import LandingPage from './ui/landing_page'
-import LoginPage from './ui/login'
-import Footer from "./ui/footer"
+import LandingPage from './components/landing_page'
+import LoginPage from './components/login'
+import LoadingPage from './components/loading_page'
+import Footer from "./components/footer"
 import {fireApp, db} from './fire-config'
 import * as firebase from 'firebase'
 import { USERS_COLLECTION } from './utils'
@@ -10,7 +11,8 @@ import { USERS_COLLECTION } from './utils'
 class App extends Component {
   state = {
     isLoggedIn: false,
-    user: {}
+    isLoading: true,
+    user: {},
   }
   
   componentDidMount() {
@@ -18,9 +20,14 @@ class App extends Component {
       if (user) {
         this.setState({
           isLoggedIn: true,
+          isLoading: false,
           user
         })
-      } 
+      } else {
+        this.setState({
+          isLoading: false,
+        })
+      }
     })
   }
 
@@ -39,6 +46,7 @@ class App extends Component {
         var user = result.user;
         this.setState({
           isLoggedIn: true,
+          isLoading: false,
           user
         })
         // insert user into DB if they don't already exist
@@ -76,7 +84,33 @@ class App extends Component {
     });
   }
 
+  componentToRender = () => {
+    const {
+      isLoggedIn,
+      isLoading,
+      user,
+    } = this.state;
+
+    if (isLoading) {
+      return <LoadingPage />
+    } else if (isLoggedIn && !!user) {
+      return (
+        <LandingPage
+          userObject={user}
+          handleLogoutClick={e => this.handleSignOutButtonClick(e)}
+        />
+      );
+    } else {
+      return (
+        <LoginPage
+          handleLoginClick={e => this.handleSignInButtonClick(e)}
+        />
+      )
+    }
+  }
+
   render() {
+    console.log(this.state.isLoading)
     return (
       <div
         className="App"
@@ -89,15 +123,7 @@ class App extends Component {
         <div style={{
           flex: 1,
         }}>
-          {this.state.isLoggedIn ?
-            (<LandingPage
-              userObject={this.state.user}
-              handleLogoutClick={e => this.handleSignOutButtonClick(e)}
-            />) :
-            (<LoginPage
-              handleLoginClick={e => this.handleSignInButtonClick(e)}
-            />)
-          }
+          {this.componentToRender()}
         </div>
         <Footer />
       </div>

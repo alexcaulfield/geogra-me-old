@@ -1,10 +1,10 @@
 import React from 'react'
-import {Header, Icon, Segment} from "semantic-ui-react";
+import {Header as SemanticHeader, Icon, Segment} from "semantic-ui-react";
 
 const Footer = () => {
   return (
     <Segment>
-      <Header as='h4'>© {new Date().getFullYear()} Alex Caulfield</Header>
+      <SemanticHeader as='h4'>© {new Date().getFullYear()} Alex Caulfield</SemanticHeader>
       <span>
         Any questions? Leave a comment on <a href='https://github.com/alexcaulfield/geogra-me/issues' target="_blank"><Icon link name='github' size='large'/></a>
       </span>

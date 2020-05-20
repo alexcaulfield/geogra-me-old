@@ -1,12 +1,12 @@
 import React from 'react'
-import { Button, Icon, Header, Grid, Image} from 'semantic-ui-react'
+import { Button, Icon, Header as SemanticHeader, Grid, Image} from 'semantic-ui-react'
 import {isMobile} from 'react-device-detect';
 import { FaMapPin } from 'react-icons/fa'
 import Logo from '../img/geograme-logo-square.png'
-import useWindowDimensions from './useWindowDimensions'
+import useWindowDimensions from '../hooks/useWindowDimensions'
 
 const LoginPage = ({handleLoginClick}) => {
-  const {height, width} = useWindowDimensions();
+  const {width} = useWindowDimensions();
   const getLogoWidth = () => {
     if (isMobile) {
       return 16
@@ -26,7 +26,7 @@ const LoginPage = ({handleLoginClick}) => {
         </Grid.Column>
         <Grid.Column width={getLogoWidth()}>
           <Image src={Logo} size='huge' centered/>
-          <Header as='h3'>Welcome to Geogra.Me - a platform for you to create a push-pin <FaMapPin /> map, and take it with you wherever you go</Header>
+          <SemanticHeader as='h3'>Welcome to Geogra.Me - a platform for you to create a push-pin <FaMapPin /> map, and take it with you wherever you go</SemanticHeader>
           <Button
             icon
             labelPosition='left'

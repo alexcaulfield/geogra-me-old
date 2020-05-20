@@ -110,7 +110,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.isLoading)
     return (
       <div
         className="App"

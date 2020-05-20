@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import MyMapComponent from './map_component';
 import TravelStatsCard from './travel_stats_card';
-import UiHeader from './header';
+import Header from './header';
 import Autocomplete from "./autocomplete";
-import { Header, Button, Grid, Icon } from 'semantic-ui-react';
+import { Header as SemanticHeader, Button, Grid, Icon } from 'semantic-ui-react';
 import {db} from './../fire-config'
 import { USERS_COLLECTION } from './../utils'
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
@@ -231,7 +231,7 @@ class LandingPage extends Component {
     const { handleLogoutClick, userObject } = this.props
     return(
       <>
-        <UiHeader
+        <Header
           name={userObject.displayName}
           photoSrc={userObject.photoURL}
           handleLogoutClick={handleLogoutClick}
@@ -274,7 +274,7 @@ class LandingPage extends Component {
                 }
 
                 <Grid.Column width={isMobile ? 16 : 5}>
-                  <Header as='h2'>Add a Place to Your Map</Header>
+                  <SemanticHeader as='h2'>Add a Place to Your Map</SemanticHeader>
 
                   <Autocomplete
                     value={this.state.locationToAdd}

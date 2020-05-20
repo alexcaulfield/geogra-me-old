@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dropdown } from 'semantic-ui-react';
-import useAddressPredictions from "./useAddressPredictions";
+import useAddressPredictions from "../hooks/useAddressPredictions";
 
 const Autocomplete = ({
   value,

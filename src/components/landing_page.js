@@ -35,7 +35,7 @@ class LandingPage extends Component {
   }
 
   renderMapData = () => {
-    db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).get().then((doc) => {
+    db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).get().then(doc => {
       if (doc.exists) {
         const data = doc.data()
         this.setState({

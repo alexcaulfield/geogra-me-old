@@ -7,6 +7,7 @@ import LoginPage from "./login";
 import { Redirect, Route, withRouter, Switch } from 'react-router-dom'
 import LandingPage from "./landing_page";
 import NotFound from "./not_found";
+import GeneralProfile from "./general_profile";
 
 const HOME = 'HOME'
 const PROFILE = 'PROFILE'
@@ -129,6 +130,10 @@ class AppRouting extends Component {
   render() {
     return (
       <Switch>
+        <Route
+          path='/profile/:userId'
+          render={({ match }) => <GeneralProfile userId={match.params.userId} appUserEmail={this.state.user.email}/>}
+        />
         <Route path='/profile'>
           {this.renderRoute(PROFILE)}
         </Route>

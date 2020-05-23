@@ -10,6 +10,7 @@ import {
 } from 'semantic-ui-react'
 import {isMobile} from 'react-device-detect'
 import {Link} from 'react-router-dom'
+import ErrorMessage from "./error_message";
 
 const NotFound = () => (
   <>
@@ -35,21 +36,14 @@ const NotFound = () => (
         </Container>
       </Menu>
     </Segment>
-    <Segment>
-      <div style={{
-        paddingTop: '25px',
-        width: isMobile ? '100%' : '40%',
-        margin:  '0 auto',
-      }}>
-        <Message icon>
-          <Icon name='dont' />
-          <Message.Content>
-            <Message.Header>Page Not Found</Message.Header>
-            We're sorry, but this page does not exist. Please visit our <Link to='/'>homepage</Link>!
-          </Message.Content>
-        </Message>
-      </div>
-    </Segment>
+    <ErrorMessage
+      header='Page Not Found'
+      message={
+        <>
+          We're sorry, but this page does not exist. Please visit our {<Link to='/'>homepage</Link>}!
+        </>
+      }
+    />
   </>
 );
 

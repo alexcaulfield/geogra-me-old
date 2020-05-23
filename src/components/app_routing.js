@@ -5,7 +5,7 @@ import {USERS_COLLECTION} from "../utils";
 import LoadingPage from "./loading_page";
 import LoginPage from "./login";
 import { Redirect, Route, withRouter, Switch } from 'react-router-dom'
-import LandingPage from "./landing_page";
+import LandingPage from "./current_user_profile";
 import NotFound from "./not_found";
 import GeneralProfile from "./general_profile";
 
@@ -132,7 +132,13 @@ class AppRouting extends Component {
       <Switch>
         <Route
           path='/profile/:userId'
-          render={({ match }) => <GeneralProfile userId={match.params.userId} appUserEmail={this.state.user.email}/>}
+          render={({ match }) => (
+            <GeneralProfile
+              userId={match.params.userId}
+              currentUser={this.state.user}
+              handleLogoutClick={e => this.handleSignInButtonClick(e)}
+            />
+          )}
         />
         <Route path='/profile'>
           {this.renderRoute(PROFILE)}

@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import {db} from './../fire-config'
 import { USERS_COLLECTION } from './../utils'
-import * as firebase from 'firebase'
-import {Icon, Message, Segment} from "semantic-ui-react";
-import {isMobile} from "react-device-detect";
 import ErrorMessage from "./error_message";
 import {Link, withRouter} from "react-router-dom";
+import {GOOGLE_MAP_URL} from './../utils';
+import Header from "./header";
+import LoadingPage from "./loading_page";
+import MyMapComponent from "./map_component";
+import TravelStatsCard from './travel_stats_card';
+import {Grid} from 'semantic-ui-react';
 
 class GeneralProfile extends Component {
   state = {
@@ -13,7 +16,15 @@ class GeneralProfile extends Component {
     publicProfile: false,
     isLoading: true,
     userExists: false,
-  }
+    profileName: '',
+    placesBeen: [],
+    placesToGo: [],
+    countriesBeen: 0,
+    mapCenter: { // default to Boston
+      lat: 42.3601,
+      lng: -71.0589
+    },
+  };
 
   componentDidMount() {
     this.getUserData();
@@ -30,15 +41,18 @@ class GeneralProfile extends Component {
         }
         const _thisRef = this;
         querySnapshot.forEach(function(doc) {
-          const data = doc.data()
-          if (_thisRef.props.appUserEmail === data.email) {
+          const data = doc.data();
+          if (_thisRef.props.currentUser.email === data.email) {
             _thisRef.props.history.push('/profile');
           }
           if (data.publicProfile) {
+            const newCenter = data.placesBeen.length > 0 ? data.placesBeen[0].location : _thisRef.state.mapCenter;
             _thisRef.setState({
+              profileName: data.name,
               placesBeen: data.placesBeen,
               placesToGo: data.placesToGo,
               countriesBeen: data.countriesBeen.length,
+              mapCenter: newCenter,
               userExists: data.username === _thisRef.state.profileId,
               isLoading: false,
               publicProfile: data.publicProfile,
@@ -54,33 +68,76 @@ class GeneralProfile extends Component {
       .catch(function(error) {
         console.log("Error getting documents: ", error);
       });
-  }
+  };
+
+  renderPageComponent = () => {
+    if (!this.state.userExists) {
+      return (
+        <ErrorMessage
+          header='User does not exist'
+          message={
+            <>
+              We couldn't find any information on this user. Please visit our {<Link to='/'>homepage</Link>}!
+            </>
+          }
+        />
+      )
+    } else if (!this.state.publicProfile) {
+      return (
+        <ErrorMessage
+          header='Private Profile'
+          message="This user's profile is private, please contact them to make their profile public"
+        />
+      );
+    } else if (this.state.publicProfile) {
+      return (
+        <>
+          <Header
+            name={this.props.currentUser.displayName}
+            photoSrc={this.props.currentUser.photoURL}
+            profileName={this.state.profileName}
+            handleLogoutClick={this.props.handleLogoutClick}
+            shouldRenderPrivacySettings={false}
+          />
+          <div style={{
+            marginTop: '30px'
+          }}>
+            <MyMapComponent
+              isMarkerShown
+              googleMapURL={GOOGLE_MAP_URL}
+              loadingElement={<div style={{ height: `100%` }} />}
+              containerElement={<div style={{ height: `700px` }} />}
+              mapElement={<div style={{ height: `100%` }} />}
+              listOfCities={this.state.placesBeen}
+              shouldRenderPlacesBeen
+              mapCenter={this.state.mapCenter}
+              shouldRenderUpdateButtons={false}
+            />
+          </div>
+          <div style={{
+            marginTop: "25px",
+            marginBottom: "10px",
+          }}>
+            <Grid centered>
+              <TravelStatsCard
+                name={this.state.profileName}
+                countriesBeen={this.state.countriesBeen}
+              />
+            </Grid>
+          </div>
+        </>
+      )
+    }
+  };
 
   render() {
     return (
       <>
-        {!this.state.publicProfile && !this.state.isLoading && this.state.userExists &&
-          <ErrorMessage
-            header='Private Profile'
-            message="This user's profile is private, please contact them to make their profile public"
-          />
-        }
-        {!this.state.isLoading && !this.state.userExists &&
-          <ErrorMessage
-            header='User does not exist'
-            message={
-              <>
-                We couldn't find any information on this user. Please visit our {<Link to='/'>homepage</Link>}!
-              </>
-            }
-          />
-        }
-        {this.state.publicProfile && !this.state.isLoading && this.state.userExists &&
-          <ErrorMessage
-            header='User Exists'
-            message="Yay!"
-          />
-        }
+        {this.state.isLoading ? (
+          <LoadingPage />
+        ): (
+          this.renderPageComponent()
+        )}
       </>
     )
   }

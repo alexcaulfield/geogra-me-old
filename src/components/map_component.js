@@ -15,6 +15,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
           shouldRenderPlacesBeen={props.shouldRenderPlacesBeen}
           shouldRenderPlacesToGo={props.shouldRenderPlacesToGo}
           moveToPlacesBeen={props.moveToPlacesBeen}
+          shouldRenderUpdateButtons={props.shouldRenderUpdateButtons}
         />
         )) }
     </GoogleMap>

@@ -10,7 +10,7 @@ const splitCity = fullName => {
   return [fullName, '']
 }
 
-const InfoWindowCard = ({city, country, deletePlace, cityObj, imgUrl, isPlaceToGo, isPlaceBeen, moveToPlacesBeen, setIsOpen}) => (
+const InfoWindowCard = ({city, country, deletePlace, cityObj, imgUrl, isPlaceToGo, isPlaceBeen, moveToPlacesBeen, setIsOpen, shouldRenderUpdateButtons}) => (
   <Card>
     <Card.Content>
       <Card.Header>{city}</Card.Header>
@@ -20,22 +20,24 @@ const InfoWindowCard = ({city, country, deletePlace, cityObj, imgUrl, isPlaceToG
           <Image src={imgUrl} wrapped rounded size='medium' />
         )}
       </Card.Description>
-      <Card.Content extra>
-        <div style={{paddingBottom: '10px'}}>
-          <Button content='Delete this place' icon='delete' onClick={() => {
-            deletePlace(cityObj, isPlaceToGo, isPlaceBeen)
-            setIsOpen(false)
-          }} />
-        </div>
-        {isPlaceToGo && (
-          <Button content="I've been to this place!" icon='check' onClick={() => moveToPlacesBeen(cityObj, isPlaceToGo, isPlaceBeen)} />
-        )}
-      </Card.Content>
+      {shouldRenderUpdateButtons &&
+        <Card.Content extra>
+          <div style={{paddingBottom: '10px'}}>
+            <Button content='Delete this place' icon='delete' onClick={() => {
+              deletePlace(cityObj, isPlaceToGo, isPlaceBeen)
+              setIsOpen(false)
+            }} />
+          </div>
+          {isPlaceToGo && (
+            <Button content="I've been to this place!" icon='check' onClick={() => moveToPlacesBeen(cityObj, isPlaceToGo, isPlaceBeen)} />
+          )}
+        </Card.Content>
+      }
     </Card.Content>
   </Card>
 );
 
-const MapInfoWindowComponent = ({city, deletePlace, shouldRenderPlacesBeen, shouldRenderPlacesToGo, moveToPlacesBeen}) => {
+const MapInfoWindowComponent = ({city, deletePlace, shouldRenderPlacesBeen, shouldRenderPlacesToGo, moveToPlacesBeen, shouldRenderUpdateButtons}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [cityName, country] = splitCity(city.name)
   const [locationImageUrl, setLocationImageUrl] = useState('')
@@ -74,6 +76,7 @@ const MapInfoWindowComponent = ({city, deletePlace, shouldRenderPlacesBeen, shou
             isPlaceBeen={shouldRenderPlacesBeen}
             moveToPlacesBeen={moveToPlacesBeen}
             setIsOpen={setIsOpen}
+            shouldRenderUpdateButtons={shouldRenderUpdateButtons}
           />
         </InfoWindow>
       )}

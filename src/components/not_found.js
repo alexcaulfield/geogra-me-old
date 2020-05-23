@@ -6,9 +6,7 @@ import {
   Icon,
   Grid,
   Container,
-  Message,
 } from 'semantic-ui-react'
-import {isMobile} from 'react-device-detect'
 import {Link} from 'react-router-dom'
 import ErrorMessage from "./error_message";
 

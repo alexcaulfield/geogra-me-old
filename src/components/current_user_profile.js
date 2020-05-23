@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
 import MyMapComponent from './map_component';
-import TravelStatsCard from './travel_stats_card';
 import Header from './header';
-import Autocomplete from "./autocomplete";
-import { Header as SemanticHeader, Button, Grid, Icon } from 'semantic-ui-react';
 import {db} from './../fire-config'
-import { USERS_COLLECTION } from './../utils'
+import { USERS_COLLECTION, GOOGLE_MAP_URL } from './../utils'
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
-import {isMobile} from 'react-device-detect';
 import * as firebase from 'firebase'
+import InteractiveMapSection from "./interactive_map_section";
 
 class LandingPage extends Component {
   state = {
@@ -23,6 +20,7 @@ class LandingPage extends Component {
     wantToGoButtonClicked: false,
     shouldRenderPlacesBeen: true,
     shouldRenderPlacesToGo: false,
+    userProfileLink: '',
     publicProfile: this.props.userObject.publicProfile,
     mapCenter: { // default to Boston
       lat: 42.3601,
@@ -42,6 +40,7 @@ class LandingPage extends Component {
           placesBeen: data.placesBeen,
           placesToGo: data.placesToGo,
           countriesBeen: data.countriesBeen.length,
+          userProfileLink: `https://geogra.me/profile/${data.username}`
         })
       } else {
         console.log(`there was an error in fetching data for user ${this.state.userDocIdentifier}`)
@@ -228,22 +227,25 @@ class LandingPage extends Component {
 
   
   render() {
-    const { handleLogoutClick, userObject } = this.props
+    const { handleLogoutClick, userObject } = this.props;
     return(
       <>
         <Header
           name={userObject.displayName}
           photoSrc={userObject.photoURL}
+          profileName={userObject.displayName}
           handleLogoutClick={handleLogoutClick}
+          shouldRenderPrivacySettings
           publicProfile={this.state.publicProfile}
           onClickUpdateProfilePrivacy={this.handleUpdateProfilePrivacy}
+          userProfileLink={this.state.userProfileLink}
         />
         <div style={{
           marginTop: '30px'
         }}>
           <MyMapComponent
             isMarkerShown
-            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyAq-bT8CcgFTuTQZjkjLCRFSawl4k9jJ_Q&libraries=geometry,drawing,places"
+            googleMapURL={GOOGLE_MAP_URL}
             loadingElement={<div style={{ height: `100%` }} />}
             containerElement={<div style={{ height: `700px` }} />}
             mapElement={<div style={{ height: `100%` }} />}
@@ -253,89 +255,24 @@ class LandingPage extends Component {
             deletePlace={this.deletePlace}
             moveToPlacesBeen={this.moveToPlacesBeen}
             mapCenter={this.state.mapCenter}
+            shouldRenderUpdateButtons
           />
-
-          <div style={{
-            marginTop: '40px'
-          }}>
-            <Grid columns={3} divided>
-              <Grid.Row>
-                {!isMobile &&
-                  <Grid.Column>
-                    <div style={{
-                      paddingLeft: '20%'
-                    }}>
-                      <TravelStatsCard
-                        name={userObject.displayName}
-                        countriesBeen={this.state.countriesBeen}
-                      />
-                    </div>
-                  </Grid.Column>
-                }
-
-                <Grid.Column width={isMobile ? 16 : 5}>
-                  <SemanticHeader as='h2'>Add a Place to Your Map</SemanticHeader>
-
-                  <Autocomplete
-                    value={this.state.locationToAdd}
-                    onChange={this.handleTextChange}
-                    onSearchChange={this.handleInputChange}
-                  />
-
-                  <Grid>
-                    <Grid.Column width={2} />
-                    <Grid.Column width={6}>
-                      <Button.Group>
-                        <Button
-                          active={this.state.beenToButtonClicked}
-                          onClick={this.handleBeenToClick}
-                        >
-                          Been To
-                        </Button>
-                        <Button.Or />
-                        <Button
-                          active={this.state.wantToGoButtonClicked}
-                          onClick={this.handleWantToGoClick}
-                        >
-                          Want To Go!
-                        </Button>
-                      </Button.Group>
-                    </Grid.Column>
-                    <Grid.Column width={2} />
-                    <Grid.Column width={5}>
-                      <Button onClick={this.handleAddLocationToDB}>
-                        Add <Icon name='map marker' />
-                      </Button>
-                    </Grid.Column>
-                  </Grid>
-                </Grid.Column>
-
-                {!isMobile &&
-                  <Grid.Column>
-                    <div style={{
-                      paddingTop: '5%'
-                    }}>
-                      <Button.Group>
-                        <Button
-                          active={this.state.shouldRenderPlacesBeen}
-                          onClick={this.handleSeePlacesBeen}
-                        >
-                          Show Places Been
-                        </Button>
-                        <Button.Or text='Or' />
-                        <Button
-                          active={this.state.shouldRenderPlacesToGo}
-                          onClick={this.handleSeePlacesToGo}
-                        >
-                          Show Places to Go
-                        </Button>
-                      </Button.Group>
-                    </div>
-                  </Grid.Column>
-                }
-              </Grid.Row>
-            </Grid>
-          </div>
+          <InteractiveMapSection
+            userObject={userObject}
+            countriesBeen={this.state.countriesBeen}
+            locationToAdd={this.state.locationToAdd}
+            handleTextChange={this.handleTextChange}
+            handleInputChange={this.handleInputChange}
+            beenToButtonClicked={this.state.beenToButtonClicked}
+            handleBeenToClick={this.handleBeenToClick}
+            wantToGoButtonClicked={this.state.wantToGoButtonClicked}
+            handleWantToGoClick={this.handleWantToGoClick}
+            handleAddLocationToDB={this.handleAddLocationToDB}
+            shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
+            handleSeePlacesBeen={this.handleSeePlacesBeen}
+            shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
+            handleSeePlacesToGo={this.handleSeePlacesToGo}
+          />
         </div>
       </>
     )

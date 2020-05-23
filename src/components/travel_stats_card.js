@@ -1,13 +1,18 @@
 import React from 'react'
-import { Card } from 'semantic-ui-react'
+import { Card, Statistic, Icon } from 'semantic-ui-react'
 
 const TravelStatsCard = ({name, countriesBeen}) => {
     return (
         <Card>
             <Card.Content>
-                <Card.Header>Stats</Card.Header>
+                <Card.Header>Stats for {name}</Card.Header>
                 <Card.Description>
-                    {name} has been to {countriesBeen} countries!
+                  <Statistic>
+                    <Statistic.Value>{countriesBeen}</Statistic.Value>
+                    <Statistic.Label>
+                      <Icon name='flag'/>Countries
+                    </Statistic.Label>
+                  </Statistic>
                 </Card.Description>
             </Card.Content>
         </Card>

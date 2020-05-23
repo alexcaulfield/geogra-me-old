@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Marker, InfoWindow} from "react-google-maps"
-import { Card, Button, Image, Grid } from 'semantic-ui-react'
+import { Card, Button, Image } from 'semantic-ui-react'
 
 const splitCity = fullName => {
   const namePieces = fullName.split(', ')

@@ -6,7 +6,9 @@ import {
   Segment,
   Menu,
   Header as SemanticHeader,
-  Icon, Grid, Container,
+  Icon,
+  Grid,
+  Container,
 } from 'semantic-ui-react'
 
 const LoadingPage = () => (

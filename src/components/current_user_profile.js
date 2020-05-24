@@ -48,6 +48,11 @@ class LandingPage extends Component {
     }).catch((error) => console.log("Error getting document:", error))
   };
 
+  getCountry = country => {
+    const locationSplit = country.split(', ');
+    return locationSplit[locationSplit.length - 1];
+  };
+
   handleAddLocationToDB = () => {
     let locationObj = {};
     geocodeByAddress(this.state.locationToAdd)
@@ -57,8 +62,7 @@ class LandingPage extends Component {
       })
       .then(({ lat, lng }) => {
         let objToAdd = {};
-        const locationSplit = this.state.locationToAdd.split(', ')
-        const country = locationSplit[locationSplit.length - 1]
+        const country = this.getCountry(this.state.locationToAdd);
         if (this.state.beenToButtonClicked) {
           objToAdd = {
             placesBeen: firebase.firestore.FieldValue.arrayUnion({
@@ -68,6 +72,7 @@ class LandingPage extends Component {
                 lng,
               },
               placeId: locationObj.place_id,
+              country: country,
             }),
             countriesBeen: firebase.firestore.FieldValue.arrayUnion(country),
           }
@@ -105,8 +110,8 @@ class LandingPage extends Component {
 
 
   handleUpdateProfilePrivacy = (e) => {
-    e.preventDefault()
-    const currentPublicProfileSetting = this.state.publicProfile
+    e.preventDefault();
+    const currentPublicProfileSetting = this.state.publicProfile;
     db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update({
       publicProfile: !currentPublicProfileSetting
     })
@@ -118,9 +123,31 @@ class LandingPage extends Component {
       .catch(error => console.log('unable to update user profile setting'))
   };
 
+  shouldRemoveCountry = (placeList, country) => {
+    if (!country) {
+      return false;
+    }
+    const otherPlacesFromCountry = placeList.filter(place => place.country === country);
+    return otherPlacesFromCountry.length === 0;
+  };
+
   deletePlace = (placeToDelete, placeToGo, placeBeen) => {
     if (placeBeen) {
-      const updatedPlacesBeen = this.state.placesBeen.filter(place => place.name !== placeToDelete.name)
+      const updatedPlacesBeen = this.state.placesBeen.filter(place => place.name !== placeToDelete.name);
+      const shouldRemoveCountryFromList = this.shouldRemoveCountry(updatedPlacesBeen, placeToDelete.country);
+      if (shouldRemoveCountryFromList) {
+        db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update({
+          countriesBeen: firebase.firestore.FieldValue.arrayRemove(placeToDelete.country)
+        })
+          .then(response => {
+            this.setState(prevState => {
+              return {
+                countriesBeen: prevState.countriesBeen - 1
+              }
+            })
+          })
+          .catch(error => console.log(error))
+      }
       db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update({
         placesBeen: updatedPlacesBeen
       })
@@ -135,7 +162,7 @@ class LandingPage extends Component {
         })
         .catch(error => console.log(error))
     } else if (placeToGo) {
-      const updatedPlacesToGo = this.state.placesToGo.filter(place => place.name !== placeToDelete.name)
+      const updatedPlacesToGo = this.state.placesToGo.filter(place => place.name !== placeToDelete.name);
       db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update({
         placesToGo: updatedPlacesToGo
       })
@@ -153,9 +180,8 @@ class LandingPage extends Component {
   };
 
   moveToPlacesBeen = (placeToMove, placeToGo, placeBeen) => {
-    const locationSplit = placeToMove.name.split(', ')
-    const country = locationSplit[locationSplit.length - 1]
-    this.deletePlace(placeToMove, placeToGo, placeBeen)
+    const country = placeToMove.country ? placeToMove.country : this.getCountry(placeToMove);
+    this.deletePlace(placeToMove, placeToGo, placeBeen);
     const objToAdd = {
       placesBeen: firebase.firestore.FieldValue.arrayUnion({
         name: placeToMove.name,
@@ -164,6 +190,7 @@ class LandingPage extends Component {
           lng: placeToMove.location.lng,
         },
         placeId: placeToMove.placeId ? placeToMove.placeId : '',
+        country: country,
       }),
       countriesBeen: firebase.firestore.FieldValue.arrayUnion(country),
     };

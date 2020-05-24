@@ -6,10 +6,10 @@ const Footer = () => {
     <Segment>
       <SemanticHeader as='h4'>© {new Date().getFullYear()} Alex Caulfield</SemanticHeader>
       <span>
-        Any questions? Leave a comment on <a href='https://github.com/alexcaulfield/geogra-me/issues' target="_blank"><Icon link name='github' size='large'/></a>
+        Any questions? Leave a comment on <a href='https://github.com/alexcaulfield/geogra-me/issues' target="_blank" rel="noopener noreferrer"><Icon link name='github' size='large'/></a>
       </span>
       <span>
-        or contact Alex on <a href='https://www.linkedin.com/in/alexandercaulfield/ ' target="_blank"><Icon link name='linkedin' size='large'/></a>
+        or contact Alex on <a href='https://www.linkedin.com/in/alexandercaulfield/ ' target="_blank" rel="noopener noreferrer"><Icon link name='linkedin' size='large'/></a>
       </span>
     </Segment>
   )

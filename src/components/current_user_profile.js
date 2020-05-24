@@ -35,12 +35,12 @@ class LandingPage extends Component {
   renderMapData = () => {
     db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).get().then(doc => {
       if (doc.exists) {
-        const data = doc.data()
+        const data = doc.data();
         this.setState({
           placesBeen: data.placesBeen,
           placesToGo: data.placesToGo,
           countriesBeen: data.countriesBeen.length,
-          userProfileLink: `https://geogra.me/profile/${data.username}`
+          userProfileLink: `https://geogra.me/profile/${data.username}`,
         })
       } else {
         console.log(`there was an error in fetching data for user ${this.state.userDocIdentifier}`)
@@ -49,7 +49,7 @@ class LandingPage extends Component {
   };
 
   handleAddLocationToDB = () => {
-    let locationObj = {}
+    let locationObj = {};
     geocodeByAddress(this.state.locationToAdd)
       .then(results => {
         locationObj = results[0];

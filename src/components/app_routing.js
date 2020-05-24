@@ -9,8 +9,8 @@ import LandingPage from "./current_user_profile";
 import NotFound from "./not_found";
 import GeneralProfile from "./general_profile";
 
-const HOME = 'HOME'
-const PROFILE = 'PROFILE'
+const HOME = 'HOME';
+const PROFILE = 'PROFILE';
 
 class AppRouting extends Component {
   state = {
@@ -44,8 +44,6 @@ class AppRouting extends Component {
     const googleProvider = new firebase.auth.GoogleAuthProvider()
     fireApp.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
       fireApp.auth().signInWithPopup(googleProvider).then(result => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
         this.setState({

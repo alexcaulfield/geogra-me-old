@@ -9,6 +9,7 @@ import LoadingPage from "./loading_page";
 import MyMapComponent from "./map_component";
 import TravelStatsCard from './travel_stats_card';
 import {Grid} from 'semantic-ui-react';
+import BasicHeader from "./basic_header";
 
 class GeneralProfile extends Component {
   state = {
@@ -73,21 +74,27 @@ class GeneralProfile extends Component {
   renderPageComponent = () => {
     if (!this.state.userExists) {
       return (
-        <ErrorMessage
-          header='User does not exist'
-          message={
-            <>
-              We couldn't find any information on this user. Please visit our {<Link to='/'>homepage</Link>}!
-            </>
-          }
-        />
+        <>
+          <BasicHeader />
+          <ErrorMessage
+            header='User does not exist'
+            message={
+              <>
+                We couldn't find any information on this user. Please visit our {<Link to='/'>homepage</Link>}!
+              </>
+            }
+          />
+        </>
       )
     } else if (!this.state.publicProfile) {
       return (
-        <ErrorMessage
-          header='Private Profile'
-          message="This user's profile is private, please contact them to make their profile public"
-        />
+        <>
+          <BasicHeader />
+          <ErrorMessage
+            header='Private Profile'
+            message="This user's profile is private, please contact them to make their profile public"
+          />
+        </>
       );
     } else if (this.state.publicProfile) {
       return (

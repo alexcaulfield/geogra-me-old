@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Button,
   Segment,
@@ -8,7 +8,7 @@ import {
   Icon,
   Image,
   Grid,
-  Message,
+  Popup,
 } from 'semantic-ui-react';
 import {isMobile} from 'react-device-detect';
 import {Link} from 'react-router-dom';
@@ -49,9 +49,15 @@ const Header = ({
           {shouldRenderPrivacySettings &&
           <Grid.Column>
             <Button.Group>
-              <Button positive={publicProfile} icon='lock open' onClick={onClickUpdateProfilePrivacy}/>
+              <Popup
+                content='Make your profile public'
+                trigger={<Button positive={publicProfile} icon='lock open' onClick={onClickUpdateProfilePrivacy}/>}
+              />
               <Button.Or />
-              <Button positive={!publicProfile} icon='lock' onClick={onClickUpdateProfilePrivacy}/>
+              <Popup
+                content='Make your profile private'
+                trigger={<Button positive={!publicProfile} icon='lock' onClick={onClickUpdateProfilePrivacy}/>}
+              />
             </Button.Group>
           </Grid.Column>
           }

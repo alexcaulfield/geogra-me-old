@@ -1,9 +1,9 @@
-import React from 'react'
-import { Button, Icon, Header as SemanticHeader, Grid, Image} from 'semantic-ui-react'
+import React from 'react';
+import { Button, Icon, Header as SemanticHeader, Grid, Image} from 'semantic-ui-react';
 import {isMobile} from 'react-device-detect';
-import { FaMapPin } from 'react-icons/fa'
-import Logo from '../img/geograme-logo-square.png'
-import useWindowDimensions from '../hooks/useWindowDimensions'
+import { FaMapPin } from 'react-icons/fa';
+import Logo from '../img/geograme-logo-square.png';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 const LoginPage = ({handleLoginClick}) => {
   const {width} = useWindowDimensions();
@@ -17,7 +17,7 @@ const LoginPage = ({handleLoginClick}) => {
     } else {
       return 8
     }
-  }
+  };
 
   return (
     <div style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -42,6 +42,6 @@ const LoginPage = ({handleLoginClick}) => {
     </div>
 
   )
-}
+};
 
-export default LoginPage
+export default LoginPage;

@@ -26,7 +26,7 @@ class LandingPage extends Component {
       lat: 42.3601,
       lng: -71.0589
     },
-  }
+  };
 
   componentDidMount() {
     this.renderMapData()
@@ -46,7 +46,7 @@ class LandingPage extends Component {
         console.log(`there was an error in fetching data for user ${this.state.userDocIdentifier}`)
       }
     }).catch((error) => console.log("Error getting document:", error))
-  }
+  };
 
   handleAddLocationToDB = () => {
     let locationObj = {}
@@ -101,7 +101,7 @@ class LandingPage extends Component {
           console.log(`error saving document ${error}`)
         })
       });
-  }
+  };
 
 
   handleUpdateProfilePrivacy = (e) => {
@@ -116,7 +116,7 @@ class LandingPage extends Component {
         })
       })
       .catch(error => console.log('unable to update user profile setting'))
-  }
+  };
 
   deletePlace = (placeToDelete, placeToGo, placeBeen) => {
     if (placeBeen) {
@@ -150,7 +150,7 @@ class LandingPage extends Component {
         })
         .catch(error => console.log(error))
     }
-  }
+  };
 
   moveToPlacesBeen = (placeToMove, placeToGo, placeBeen) => {
     const locationSplit = placeToMove.name.split(', ')
@@ -166,7 +166,7 @@ class LandingPage extends Component {
         placeId: placeToMove.placeId ? placeToMove.placeId : '',
       }),
       countriesBeen: firebase.firestore.FieldValue.arrayUnion(country),
-    }
+    };
     db.collection(USERS_COLLECTION).doc(this.state.userDocIdentifier).update(objToAdd)
       .then(() => {
         this.setState({
@@ -182,14 +182,14 @@ class LandingPage extends Component {
       }).catch((error) => {
       console.log(`error saving document ${error}`)
     })
-  }
+  };
 
   handleBeenToClick = () => {
     this.setState({
       beenToButtonClicked: true,
       wantToGoButtonClicked: false,
     })
-  }
+  };
 
   handleWantToGoClick = () => {
     this.setState({
@@ -203,27 +203,27 @@ class LandingPage extends Component {
       shouldRenderPlacesBeen: false,
       shouldRenderPlacesToGo: true,
     })
-  }
+  };
 
   handleSeePlacesBeen = () => {
     this.setState({
       shouldRenderPlacesBeen: true,
       shouldRenderPlacesToGo: false,
     })
-  }
+  };
 
   handleTextChange = (e, { searchQuery, value }) => {
     this.setState({
       searchQuery,
       locationToAdd: value
     })
-  }
+  };
 
   handleInputChange = (e, dropdown) => {
     this.setState({
       locationToAdd: dropdown.searchQuery
     })
-  }
+  };
 
   
   render() {

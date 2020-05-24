@@ -1,22 +1,20 @@
-import React from 'react'
-import { Card, Statistic, Icon } from 'semantic-ui-react'
+import React from 'react';
+import { Card, Statistic, Icon } from 'semantic-ui-react';
 
-const TravelStatsCard = ({name, countriesBeen}) => {
-    return (
-        <Card>
-            <Card.Content>
-                <Card.Header>Stats for {name}</Card.Header>
-                <Card.Description>
-                  <Statistic>
-                    <Statistic.Value>{countriesBeen}</Statistic.Value>
-                    <Statistic.Label>
-                      <Icon name='flag'/>Countries
-                    </Statistic.Label>
-                  </Statistic>
-                </Card.Description>
-            </Card.Content>
-        </Card>
-    )
-}
+const TravelStatsCard = ({name, countriesBeen}) => (
+  <Card>
+    <Card.Content>
+      <Card.Header>Stats for {name}</Card.Header>
+      <Card.Description>
+        <Statistic>
+          <Statistic.Value>{countriesBeen}</Statistic.Value>
+          <Statistic.Label>
+            <Icon name='flag'/>Countries
+          </Statistic.Label>
+        </Statistic>
+      </Card.Description>
+    </Card.Content>
+  </Card>
+);
 
-export default TravelStatsCard
+export default TravelStatsCard;

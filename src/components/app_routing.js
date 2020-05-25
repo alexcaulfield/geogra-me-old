@@ -17,6 +17,7 @@ class AppRouting extends Component {
     isLoggedIn: false,
     isLoading: true,
     user: {},
+    usernameAlreadyExists: false,
   };
 
   componentDidMount() {
@@ -35,8 +36,31 @@ class AppRouting extends Component {
     })
   }
 
+  usernameAlreadyExists = (username) => {
+    this.setState({
+      usernameAlreadyExists: false,
+    }, () => {
+      db.collection(USERS_COLLECTION).where("username", "==", username)
+        .get()
+        .then(querySnapshot => {
+          this.setState({
+            usernameAlreadyExists: !querySnapshot.empty,
+          });
+        })
+        .catch(err => console.log(err));
+    })
+  };
+
   createUsername = (displayName) => {
-    return displayName.split(' ')[0] + Math.floor((Math.random() * 100000) + 1);
+    // const username = displayName.split(' ')[0] + Math.floor((Math.random() * 100000) + 1);
+    const username = 'lextest1234';
+    async () => this.usernameAlreadyExists(username);
+    console.log(this.state.usernameAlreadyExists)
+    if (this.state.usernameAlreadyExists) {
+      console.log('returned true')
+      return this.createUsername(displayName);
+    }
+    return username;
   };
 
   handleSignInButtonClick = (e, fromUrl) => {

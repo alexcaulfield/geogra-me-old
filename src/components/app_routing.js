@@ -5,7 +5,7 @@ import {USERS_COLLECTION} from "../utils";
 import LoadingPage from "./loading_page";
 import LoginPage from "./login";
 import { Redirect, Route, withRouter, Switch } from 'react-router-dom'
-import LandingPage from "./current_user_profile";
+import CurrentUserProfile from "./current_user_profile";
 import NotFound from "./not_found";
 import GeneralProfile from "./general_profile";
 
@@ -39,9 +39,9 @@ class AppRouting extends Component {
     return displayName.split(' ')[0] + Math.floor((Math.random() * 100000) + 1);
   };
 
-  handleSignInButtonClick = e => {
-    e.preventDefault()
-    const googleProvider = new firebase.auth.GoogleAuthProvider()
+  handleSignInButtonClick = (e, fromUrl) => {
+    e.preventDefault();
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
     fireApp.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
       fireApp.auth().signInWithPopup(googleProvider).then(result => {
         // The signed-in user info.
@@ -51,10 +51,15 @@ class AppRouting extends Component {
           isLoading: false,
           user
         }, () => {
-          this.props.history.push('/profile');
+          if (fromUrl) {
+            this.props.history.push(fromUrl);
+            window.location.reload();
+          } else {
+            this.props.history.push('/profile');
+          }
         });
         // insert user into DB if they don't already exist
-        const docRef = db.collection(USERS_COLLECTION).doc(user.email)
+        const docRef = db.collection(USERS_COLLECTION).doc(user.email);
         docRef.get().then((doc) => {
           if (!doc.exists) {
             // insert into user collection
@@ -70,14 +75,14 @@ class AppRouting extends Component {
           }
         }).catch((error) => console.log("Error getting document:", error))
       }).catch(function(error) {
-        const {code, message, email} = error
+        const {code, message, email} = error;
         console.log(`Error logging in with code ${code} for user ${email} with message ${message}`)
       });
     })
   };
 
   handleSignOutButtonClick = e => {
-    e.preventDefault()
+    e.preventDefault();
     fireApp.auth().signOut().then(() => {
       this.setState({
         isLoggedIn: false,
@@ -106,7 +111,7 @@ class AppRouting extends Component {
         );
       } else if (currentRoute === PROFILE) {
         return (
-          <LandingPage
+          <CurrentUserProfile
             userObject={user}
             handleLogoutClick={e => this.handleSignOutButtonClick(e)}
           />
@@ -134,7 +139,8 @@ class AppRouting extends Component {
             <GeneralProfile
               userId={match.params.userId}
               currentUser={this.state.user}
-              handleLogoutClick={e => this.handleSignInButtonClick(e)}
+              handleLoginClick={this.handleSignInButtonClick}
+              handleLogoutClick={e => this.handleSignOutButtonClick(e)}
             />
           )}
         />

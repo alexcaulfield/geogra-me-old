@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import MyMapComponent from './map_component';
 import Header from './header';
 import {db} from './../fire-config'
-import { USERS_COLLECTION, GOOGLE_MAP_URL } from './../utils'
+import { USERS_COLLECTION, GOOGLE_MAP_URL, SITE_URL } from './../utils'
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 import * as firebase from 'firebase'
 import InteractiveMapSection from "./interactive_map_section";
 
-class LandingPage extends Component {
+class CurrentUserProfile extends Component {
   state = {
     locationToAdd: '',
     searchQuery: '',
@@ -40,7 +40,7 @@ class LandingPage extends Component {
           placesBeen: data.placesBeen,
           placesToGo: data.placesToGo,
           countriesBeen: data.countriesBeen.length,
-          userProfileLink: `https://geogra.me/profile/${data.username}`,
+          userProfileLink: `${SITE_URL}/profile/${data.username}`,
         })
       } else {
         console.log(`there was an error in fetching data for user ${this.state.userDocIdentifier}`)
@@ -306,4 +306,4 @@ class LandingPage extends Component {
   }
 }
 
-export default LandingPage;
+export default CurrentUserProfile;

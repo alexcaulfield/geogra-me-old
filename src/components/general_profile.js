@@ -8,7 +8,7 @@ import Header from "./header";
 import LoadingPage from "./loading_page";
 import MyMapComponent from "./map_component";
 import TravelStatsCard from './travel_stats_card';
-import {Grid} from 'semantic-ui-react';
+import {Button, Grid, Icon} from 'semantic-ui-react';
 import BasicHeader from "./basic_header";
 
 class GeneralProfile extends Component {
@@ -66,13 +66,39 @@ class GeneralProfile extends Component {
           }
         });
       })
-      .catch(function(error) {
+      .catch((error) => {
         console.log("Error getting documents: ", error);
+        this.setState({
+          isLoading: false,
+        })
       });
   };
 
   renderPageComponent = () => {
-    if (!this.state.userExists) {
+    if (Object.keys(this.props.currentUser).length === 0) {
+      return (
+        <>
+          <BasicHeader />
+          <ErrorMessage
+            header='You must be logged in to access this page'
+            message={
+              <div style={{
+                marginTop: '10px'
+              }}>
+                <Button
+                  icon
+                  labelPosition='left'
+                  onClick={(e) => this.props.handleLoginClick(e, this.state.profileId)}
+                >
+                  <Icon name='google' />
+                  Sign in with Google
+                </Button>
+              </div>
+            }
+          />
+        </>
+      )
+    } else if (!this.state.userExists) {
       return (
         <>
           <BasicHeader />

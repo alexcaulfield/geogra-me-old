@@ -9,7 +9,7 @@ const TravelStatsCard = ({name, countriesBeen}) => (
         <Statistic>
           <Statistic.Value>{countriesBeen}</Statistic.Value>
           <Statistic.Label>
-            <Icon name='flag'/>Countries
+            <Icon name='flag'/>{countriesBeen === 1 ? 'Country' : 'Countries'}
           </Statistic.Label>
         </Statistic>
       </Card.Description>

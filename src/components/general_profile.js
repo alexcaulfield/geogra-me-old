@@ -130,7 +130,7 @@ class GeneralProfile extends Component {
             photoSrc={this.props.currentUser.photoURL}
             profileName={this.state.profileName}
             handleLogoutClick={this.props.handleLogoutClick}
-            shouldRenderPrivacySettings={false}
+            shouldRenderMyMap={false}
           />
           <div style={{
             marginTop: '30px'

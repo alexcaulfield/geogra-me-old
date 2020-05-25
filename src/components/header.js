@@ -12,17 +12,14 @@ import {
 } from 'semantic-ui-react';
 import {isMobile} from 'react-device-detect';
 import {Link} from 'react-router-dom';
-
-const copyToClipboard = (userProfileLink) => {
-  navigator.clipboard.writeText(userProfileLink)
-};
+import SettingsDropdown from "./settings_dropdown";
 
 const Header = ({
   name,
   photoSrc,
   profileName,
   handleLogoutClick,
-  shouldRenderPrivacySettings,
+  shouldRenderMyMap,
   publicProfile = {},
   onClickUpdateProfilePrivacy = () => {},
   userProfileLink,
@@ -43,37 +40,10 @@ const Header = ({
             paddingRight: '10px'
           }}>
             <SemanticHeader>
-              <Icon name='map' /> {shouldRenderPrivacySettings ? 'My': `${profileName}'s`} Map
+              <Icon name='map' /> {shouldRenderMyMap ? 'My': `${profileName}'s`} Map
             </SemanticHeader>
           </Grid.Column>
-          {shouldRenderPrivacySettings &&
-          <Grid.Column>
-            <Button.Group>
-              <Popup
-                content='Make your profile public'
-                trigger={<Button positive={publicProfile} icon='lock open' onClick={onClickUpdateProfilePrivacy}/>}
-              />
-              <Button.Or />
-              <Popup
-                content='Make your profile private'
-                trigger={<Button positive={!publicProfile} icon='lock' onClick={onClickUpdateProfilePrivacy}/>}
-              />
-            </Button.Group>
-          </Grid.Column>
-          }
         </Menu.Item>
-        }
-        {shouldRenderPrivacySettings &&
-        <div style={{
-          paddingTop: '15px',
-          paddingLeft: '10px',
-        }}>
-          <Grid.Column>
-            <Button onClick={copyToClipboard(userProfileLink)}>
-              <Icon name='share square' /> Copy Profile Link to Clipboard
-            </Button>
-          </Grid.Column>
-        </div>
         }
         <Menu.Item position={isMobile ? '' : 'right'}>
           <Link to='/profile'>
@@ -96,9 +66,12 @@ const Header = ({
             paddingRight: '10px'
           }}>
             <Grid.Column>
-              <Button as='a' onClick={handleLogoutClick}>
-                Log Out
-              </Button>
+              <SettingsDropdown
+                handleLogoutClick={handleLogoutClick}
+                publicProfile={publicProfile}
+                onClickUpdateProfilePrivacy={onClickUpdateProfilePrivacy}
+                userProfileLink={userProfileLink}
+              />
             </Grid.Column>
           </div>
         </Menu.Item>

@@ -262,7 +262,7 @@ class CurrentUserProfile extends Component {
           photoSrc={userObject.photoURL}
           profileName={userObject.displayName}
           handleLogoutClick={handleLogoutClick}
-          shouldRenderPrivacySettings
+          shouldRenderMyMap
           publicProfile={this.state.publicProfile}
           onClickUpdateProfilePrivacy={this.handleUpdateProfilePrivacy}
           userProfileLink={this.state.userProfileLink}

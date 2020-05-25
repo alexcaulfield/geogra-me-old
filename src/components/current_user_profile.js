@@ -21,6 +21,7 @@ class CurrentUserProfile extends Component {
     shouldRenderPlacesBeen: true,
     shouldRenderPlacesToGo: false,
     userProfileLink: '',
+    username: '',
     publicProfile: this.props.userObject.publicProfile,
     mapCenter: { // default to Boston
       lat: 42.3601,
@@ -41,6 +42,7 @@ class CurrentUserProfile extends Component {
           placesToGo: data.placesToGo,
           countriesBeen: data.countriesBeen.length,
           userProfileLink: `${SITE_URL}/profile/${data.username}`,
+          username: data.username,
         })
       } else {
         console.log(`there was an error in fetching data for user ${this.state.userDocIdentifier}`)
@@ -266,6 +268,7 @@ class CurrentUserProfile extends Component {
           publicProfile={this.state.publicProfile}
           onClickUpdateProfilePrivacy={this.handleUpdateProfilePrivacy}
           userProfileLink={this.state.userProfileLink}
+          username={this.state.username}
         />
         <div style={{
           marginTop: '30px'

@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   Segment,
   Menu,
   Container,
@@ -8,7 +7,6 @@ import {
   Icon,
   Image,
   Grid,
-  Popup,
 } from 'semantic-ui-react';
 import {isMobile} from 'react-device-detect';
 import {Link} from 'react-router-dom';
@@ -23,6 +21,7 @@ const Header = ({
   publicProfile = {},
   onClickUpdateProfilePrivacy = () => {},
   userProfileLink,
+  username,
 }) => (
   <Segment
     inverted
@@ -71,6 +70,7 @@ const Header = ({
                 publicProfile={publicProfile}
                 onClickUpdateProfilePrivacy={onClickUpdateProfilePrivacy}
                 userProfileLink={userProfileLink}
+                username={username}
                 renderPersonalProfileSettings={shouldRenderMyMap}
               />
             </Grid.Column>

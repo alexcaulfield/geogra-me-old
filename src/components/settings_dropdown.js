@@ -15,6 +15,7 @@ const SettingsDropdown = ({
   publicProfile,
   onClickUpdateProfilePrivacy,
   userProfileLink,
+  username,
   renderPersonalProfileSettings,
 }) => (
   <Dropdown
@@ -26,6 +27,16 @@ const SettingsDropdown = ({
       {renderPersonalProfileSettings && (
         <>
           <Dropdown.Item
+            text={username}
+            icon='user outline'
+            onClick={copyToClipboard(userProfileLink)}
+          />
+          <Dropdown.Item
+            text='Copy Profile Link'
+            icon='copy'
+            onClick={copyToClipboard(userProfileLink)}
+          />
+          <Dropdown.Item
             text='Make Profile Public'
             icon='lock open'
             active={publicProfile}
@@ -36,11 +47,6 @@ const SettingsDropdown = ({
           icon='lock'
           active={!publicProfile}
           onClick={onClickUpdateProfilePrivacy}
-          />
-          <Dropdown.Item
-            text='Copy Profile Link'
-            icon='copy'
-            onClick={copyToClipboard(userProfileLink)}
           />
         </>
       )}

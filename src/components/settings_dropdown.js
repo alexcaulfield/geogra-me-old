@@ -15,6 +15,7 @@ const SettingsDropdown = ({
   publicProfile,
   onClickUpdateProfilePrivacy,
   userProfileLink,
+  renderPersonalProfileSettings,
 }) => (
   <Dropdown
     trigger={settingsButton}
@@ -22,23 +23,27 @@ const SettingsDropdown = ({
     icon={null}
   >
     <Dropdown.Menu>
-      <Dropdown.Item
-        text='Make Profile Public'
-        icon='lock open'
-        active={publicProfile}
-        onClick={onClickUpdateProfilePrivacy}
-      />
-      <Dropdown.Item
-        text='Make Profile Private'
-        icon='lock'
-        active={!publicProfile}
-        onClick={onClickUpdateProfilePrivacy}
-      />
-      <Dropdown.Item
-        text='Copy Profile Link'
-        icon='copy'
-        onClick={copyToClipboard(userProfileLink)}
-      />
+      {renderPersonalProfileSettings && (
+        <>
+          <Dropdown.Item
+            text='Make Profile Public'
+            icon='lock open'
+            active={publicProfile}
+            onClick={onClickUpdateProfilePrivacy}
+          />
+          <Dropdown.Item
+          text='Make Profile Private'
+          icon='lock'
+          active={!publicProfile}
+          onClick={onClickUpdateProfilePrivacy}
+          />
+          <Dropdown.Item
+            text='Copy Profile Link'
+            icon='copy'
+            onClick={copyToClipboard(userProfileLink)}
+          />
+        </>
+      )}
       <Dropdown.Item
         text='Log Out'
         icon='sign out'

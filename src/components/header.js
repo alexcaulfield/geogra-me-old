@@ -71,6 +71,7 @@ const Header = ({
                 publicProfile={publicProfile}
                 onClickUpdateProfilePrivacy={onClickUpdateProfilePrivacy}
                 userProfileLink={userProfileLink}
+                renderPersonalProfileSettings={shouldRenderMyMap}
               />
             </Grid.Column>
           </div>

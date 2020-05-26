@@ -66,7 +66,7 @@ class CurrentUserProfile extends Component {
       })
       .then(({ lat, lng }) => {
         let objToAdd = {};
-        const country = this.getCountry(this.state.locationToAdd.name);
+        const country = this.getCountry(this.state.locationToAdd);
         if (this.state.beenToButtonClicked) {
           objToAdd = {
             placesBeen: firebase.firestore.FieldValue.arrayUnion({

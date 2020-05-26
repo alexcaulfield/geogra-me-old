@@ -52,7 +52,6 @@ class CurrentUserProfile extends Component {
   };
 
   getCountry = location => {
-    console.log(location)
     const locationSplit = location.split(', ');
     return locationSplit[locationSplit.length - 1];
   };

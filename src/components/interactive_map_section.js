@@ -20,7 +20,7 @@ const InteractiveMapSection = ({
   handleSeePlacesToGo,
   shouldRenderMyMap,
 }) => (
-    <Grid columns={2} divided>
+    <Grid columns={2} divided padded='horizontally'>
       <Grid.Row>
         <Grid.Column only='computer'>
           <div style={{paddingBottom: '2%'}}>

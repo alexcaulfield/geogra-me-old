@@ -118,7 +118,11 @@ class GeneralProfile extends Component {
           <BasicHeader />
           <ErrorMessage
             header='Private Profile'
-            message="This user's profile is private, please contact them to make their profile public"
+            message={
+              <>
+                This user's profile is private, please contact them to make their profile public. Please visit our {<Link to='/'>homepage</Link>}!
+              </>
+            }
           />
         </>
       );

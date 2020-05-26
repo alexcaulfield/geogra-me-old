@@ -42,19 +42,14 @@ const Header = ({
         </Menu.Item>
         <Menu.Item position='right'>
           <Grid>
-          <Grid.Row columns={3}>
+          <Grid.Row>
+            <Responsive minWidth={768}>
             <Grid.Column>
-              <Responsive minWidth={768}>
-                <Link to='/profile'>
-                  <Image src={photoSrc} size='mini' circular />
-                </Link>
-              </Responsive>
+              <Link to='/profile'>
+                <Image src={photoSrc} size='mini' circular />
+              </Link>
             </Grid.Column>
-            <Grid.Column>
-              <Responsive minWidth={768}>
-                <SemanticHeader>{name}</SemanticHeader>
-              </Responsive>
-            </Grid.Column>
+            </Responsive>
             <Grid.Column>
               <SettingsDropdown
                 handleLogoutClick={handleLogoutClick}

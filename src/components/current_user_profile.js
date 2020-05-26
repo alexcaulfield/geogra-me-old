@@ -51,8 +51,9 @@ class CurrentUserProfile extends Component {
     }).catch((error) => console.log("Error getting document:", error))
   };
 
-  getCountry = country => {
-    const locationSplit = country.split(', ');
+  getCountry = location => {
+    console.log(location)
+    const locationSplit = location.split(', ');
     return locationSplit[locationSplit.length - 1];
   };
 
@@ -65,7 +66,7 @@ class CurrentUserProfile extends Component {
       })
       .then(({ lat, lng }) => {
         let objToAdd = {};
-        const country = this.getCountry(this.state.locationToAdd);
+        const country = this.getCountry(this.state.locationToAdd.name);
         if (this.state.beenToButtonClicked) {
           objToAdd = {
             placesBeen: firebase.firestore.FieldValue.arrayUnion({
@@ -183,7 +184,7 @@ class CurrentUserProfile extends Component {
   };
 
   moveToPlacesBeen = (placeToMove, placeToGo, placeBeen) => {
-    const country = placeToMove.country ? placeToMove.country : this.getCountry(placeToMove);
+    const country = placeToMove.country ? placeToMove.country : this.getCountry(placeToMove.name);
     this.deletePlace(placeToMove, placeToGo, placeBeen);
     const objToAdd = {
       placesBeen: firebase.firestore.FieldValue.arrayUnion({

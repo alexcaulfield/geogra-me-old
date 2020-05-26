@@ -20,7 +20,7 @@ const SettingsDropdown = ({
 }) => (
   <Dropdown
     trigger={settingsButton}
-    pointing='top left'
+    pointing='top right'
     icon={null}
   >
     <Dropdown.Menu>

@@ -10,7 +10,9 @@ const Autocomplete = ({
   const predictions = useAddressPredictions(value);
   return (
     <div style={{
-      paddingBottom: '10px'
+      paddingBottom: '10px',
+      margin: '0 auto',
+      width: '80%',
     }}>
       <Dropdown
         placeholder='Search for a Place'

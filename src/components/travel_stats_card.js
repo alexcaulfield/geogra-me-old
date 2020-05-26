@@ -4,7 +4,7 @@ import { Card, Statistic, Icon } from 'semantic-ui-react';
 const TravelStatsCard = ({name, countriesBeen}) => (
   <Card>
     <Card.Content>
-      <Card.Header>Stats for {name}</Card.Header>
+      <Card.Header>{name} Stats</Card.Header>
       <Card.Description>
         <Statistic>
           <Statistic.Value>{countriesBeen}</Statistic.Value>

@@ -20,6 +20,6 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
         )) }
     </GoogleMap>
   </div>
-))
+));
 
 export default MyMapComponent;

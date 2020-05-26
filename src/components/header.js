@@ -8,7 +8,6 @@ import {
   Image,
   Grid,
 } from 'semantic-ui-react';
-import {isMobile} from 'react-device-detect';
 import {Link} from 'react-router-dom';
 import SettingsDropdown from "./settings_dropdown";
 
@@ -33,7 +32,6 @@ const Header = ({
       size='large'
     >
       <Container>
-        {!isMobile &&
         <Menu.Item>
           <Grid.Column style={{
             paddingRight: '10px'
@@ -43,8 +41,7 @@ const Header = ({
             </SemanticHeader>
           </Grid.Column>
         </Menu.Item>
-        }
-        <Menu.Item position={isMobile ? '' : 'right'}>
+        <Menu.Item position='right'>
           <Link to='/profile'>
             <div style={{
               paddingRight: '10px'

@@ -139,7 +139,7 @@ class GeneralProfile extends Component {
               isMarkerShown
               googleMapURL={GOOGLE_MAP_URL}
               loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `700px` }} />}
+              containerElement={<div style={{ height: `60vh`, width: `100vw` }} />}
               mapElement={<div style={{ height: `100%` }} />}
               listOfCities={this.state.placesBeen}
               shouldRenderPlacesBeen

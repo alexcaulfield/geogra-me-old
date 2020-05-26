@@ -6,6 +6,7 @@ import { USERS_COLLECTION, GOOGLE_MAP_URL, SITE_URL } from './../utils'
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 import * as firebase from 'firebase'
 import InteractiveMapSection from "./interactive_map_section";
+import {Grid, Container} from 'semantic-ui-react';
 
 class CurrentUserProfile extends Component {
   state = {
@@ -258,35 +259,39 @@ class CurrentUserProfile extends Component {
   render() {
     const { handleLogoutClick, userObject } = this.props;
     return(
-      <>
-        <Header
-          name={userObject.displayName}
-          photoSrc={userObject.photoURL}
-          profileName={userObject.displayName}
-          handleLogoutClick={handleLogoutClick}
-          shouldRenderMyMap
-          publicProfile={this.state.publicProfile}
-          onClickUpdateProfilePrivacy={this.handleUpdateProfilePrivacy}
-          userProfileLink={this.state.userProfileLink}
-          username={this.state.username}
-        />
-        <div style={{
-          marginTop: '30px'
-        }}>
-          <MyMapComponent
-            isMarkerShown
-            googleMapURL={GOOGLE_MAP_URL}
-            loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `700px` }} />}
-            mapElement={<div style={{ height: `100%` }} />}
-            listOfCities={this.state.shouldRenderPlacesBeen ? this.state.placesBeen : this.state.placesToGo}
-            shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
-            shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
-            deletePlace={this.deletePlace}
-            moveToPlacesBeen={this.moveToPlacesBeen}
-            mapCenter={this.state.mapCenter}
-            shouldRenderUpdateButtons
-          />
+      <Grid>
+        <Grid.Row>
+          <Container>
+            <Header
+              name={userObject.displayName}
+              photoSrc={userObject.photoURL}
+              profileName={userObject.displayName}
+              handleLogoutClick={handleLogoutClick}
+              shouldRenderMyMap
+              publicProfile={this.state.publicProfile}
+              onClickUpdateProfilePrivacy={this.handleUpdateProfilePrivacy}
+              userProfileLink={this.state.userProfileLink}
+              username={this.state.username}
+            />
+          </Container>
+        </Grid.Row>
+        <Grid.Row>
+            <MyMapComponent
+              isMarkerShown
+              googleMapURL={GOOGLE_MAP_URL}
+              loadingElement={<div style={{ height: `100%`, width: `100%` }} />}
+              containerElement={<div style={{ height: `60vh`, width: `100vw`, marginLeft: `calc(-50vw + 50%)`, paddingTop: `1px` }} />}
+              mapElement={<div style={{ height: `100%`, width: `100%` }} />}
+              listOfCities={this.state.shouldRenderPlacesBeen ? this.state.placesBeen : this.state.placesToGo}
+              shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
+              shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
+              deletePlace={this.deletePlace}
+              moveToPlacesBeen={this.moveToPlacesBeen}
+              mapCenter={this.state.mapCenter}
+              shouldRenderUpdateButtons
+            />
+        </Grid.Row>
+        <Grid.Row>
           <InteractiveMapSection
             userObject={userObject}
             countriesBeen={this.state.countriesBeen}
@@ -302,9 +307,10 @@ class CurrentUserProfile extends Component {
             handleSeePlacesBeen={this.handleSeePlacesBeen}
             shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
             handleSeePlacesToGo={this.handleSeePlacesToGo}
+            shouldRenderMyMap
           />
-        </div>
-      </>
+        </Grid.Row>
+      </Grid>
     )
   }
 }

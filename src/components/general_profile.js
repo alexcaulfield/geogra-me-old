@@ -8,7 +8,7 @@ import Header from "./header";
 import LoadingPage from "./loading_page";
 import MyMapComponent from "./map_component";
 import TravelStatsCard from './travel_stats_card';
-import {Button, Grid, Icon} from 'semantic-ui-react';
+import {Button, Container, Grid, Icon} from 'semantic-ui-react';
 import BasicHeader from "./basic_header";
 
 class GeneralProfile extends Component {
@@ -124,41 +124,38 @@ class GeneralProfile extends Component {
       );
     } else if (this.state.publicProfile) {
       return (
-        <>
-          <Header
-            name={this.props.currentUser.displayName}
-            photoSrc={this.props.currentUser.photoURL}
-            profileName={this.state.profileName}
-            handleLogoutClick={this.props.handleLogoutClick}
-            shouldRenderMyMap={false}
-          />
-          <div style={{
-            marginTop: '30px'
-          }}>
+        <Grid>
+          <Grid.Row>
+            <Container>
+              <Header
+                name={this.props.currentUser.displayName}
+                photoSrc={this.props.currentUser.photoURL}
+                profileName={this.state.profileName}
+                handleLogoutClick={this.props.handleLogoutClick}
+                shouldRenderMyMap={false}
+              />
+            </Container>
+          </Grid.Row>
+          <Grid.Row>
             <MyMapComponent
               isMarkerShown
               googleMapURL={GOOGLE_MAP_URL}
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `60vh`, width: `100vw` }} />}
-              mapElement={<div style={{ height: `100%` }} />}
+              loadingElement={<div style={{ height: `100%`, width: `100%` }} />}
+              containerElement={<div style={{ height: `60vh`, width: `100vw`, marginLeft: `calc(-50vw + 50%)`, paddingTop: `1px` }} />}
+              mapElement={<div style={{ height: `100%`, width: `100%` }} />}
               listOfCities={this.state.placesBeen}
               shouldRenderPlacesBeen
               mapCenter={this.state.mapCenter}
               shouldRenderUpdateButtons={false}
             />
-          </div>
-          <div style={{
-            marginTop: "25px",
-            marginBottom: "10px",
-          }}>
-            <Grid centered>
-              <TravelStatsCard
-                name={this.state.profileName}
-                countriesBeen={this.state.countriesBeen}
-              />
-            </Grid>
-          </div>
-        </>
+          </Grid.Row>
+          <Grid.Row centered>
+            <TravelStatsCard
+              name={`${this.state.profileName}'s`}
+              countriesBeen={this.state.countriesBeen}
+            />
+          </Grid.Row>
+        </Grid>
       )
     }
   };

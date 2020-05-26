@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Grid, Header as SemanticHeader, Icon, Container} from "semantic-ui-react";
+import {Button, Grid, Header as SemanticHeader, Icon} from "semantic-ui-react";
 import TravelStatsCard from "./travel_stats_card";
 import Autocomplete from "./autocomplete";
 

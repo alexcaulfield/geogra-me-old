@@ -1,12 +1,10 @@
 import React from 'react';
-import {Icon, Message, Segment} from "semantic-ui-react";
-import {isMobile} from "react-device-detect";
+import {Icon, Message, Segment, Responsive} from "semantic-ui-react";
 
 const ErrorMessage = ({header, message}) => (
-  <Segment>
+  <Responsive as={Segment}>
     <div style={{
       paddingTop: '25px',
-      width: isMobile ? '100%' : '40%',
       margin:  '0 auto',
     }}>
       <Message icon>
@@ -17,7 +15,7 @@ const ErrorMessage = ({header, message}) => (
         </Message.Content>
       </Message>
     </div>
-  </Segment>
+  </Responsive>
 );
 
 export default ErrorMessage;

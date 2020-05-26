@@ -7,6 +7,7 @@ import {
   Icon,
   Image,
   Grid,
+  Responsive,
 } from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import SettingsDropdown from "./settings_dropdown";
@@ -33,34 +34,27 @@ const Header = ({
     >
       <Container>
         <Menu.Item>
-          <Grid.Column style={{
-            paddingRight: '10px'
-          }}>
+          <Grid.Row>
             <SemanticHeader>
               <Icon name='map' /> {shouldRenderMyMap ? 'My': `${profileName}'s`} Map
             </SemanticHeader>
-          </Grid.Column>
+          </Grid.Row>
         </Menu.Item>
         <Menu.Item position='right'>
-          <Link to='/profile'>
-            <div style={{
-              paddingRight: '10px'
-            }}>
-              <Grid.Column>
-                <Image src={photoSrc} size='mini' circular />
-              </Grid.Column>
-            </div>
-          </Link>
-          <div style={{
-            paddingRight: '10px'
-          }}>
+          <Grid>
+          <Grid.Row columns={3}>
             <Grid.Column>
-              <SemanticHeader>{name}</SemanticHeader>
+              <Responsive minWidth={768}>
+                <Link to='/profile'>
+                  <Image src={photoSrc} size='mini' circular />
+                </Link>
+              </Responsive>
             </Grid.Column>
-          </div>
-          <div style={{
-            paddingRight: '10px'
-          }}>
+            <Grid.Column>
+              <Responsive minWidth={768}>
+                <SemanticHeader>{name}</SemanticHeader>
+              </Responsive>
+            </Grid.Column>
             <Grid.Column>
               <SettingsDropdown
                 handleLogoutClick={handleLogoutClick}
@@ -71,7 +65,8 @@ const Header = ({
                 renderPersonalProfileSettings={shouldRenderMyMap}
               />
             </Grid.Column>
-          </div>
+          </Grid.Row>
+          </Grid>
         </Menu.Item>
       </Container>
     </Menu>

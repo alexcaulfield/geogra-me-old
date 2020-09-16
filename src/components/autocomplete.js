@@ -24,6 +24,7 @@ const Autocomplete = ({
         options={predictions}
         value={value}
         clearable
+        deburr
       />
     </div>
   )

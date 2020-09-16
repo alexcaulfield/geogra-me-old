@@ -35,10 +35,6 @@ class AppRouting extends Component {
     })
   }
 
-  createUsername = (displayName) => {
-    return displayName.split(' ')[0] + Math.floor((Math.random() * 100000) + 1);
-  };
-
   handleSignInButtonClick = (e, fromUrl) => {
     e.preventDefault();
     const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -66,11 +62,11 @@ class AppRouting extends Component {
             docRef.set({
               name: user.displayName,
               email: user.email,
-              username: this.createUsername(user.displayName),
+              username: user.email,
               placesBeen: [],
               placesToGo: [],
               countriesBeen: [],
-              publicProfile: false,
+              publicProfile: true,
             })
           }
         }).catch((error) => console.log("Error getting document:", error))

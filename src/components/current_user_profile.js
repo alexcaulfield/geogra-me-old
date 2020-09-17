@@ -7,6 +7,7 @@ import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 import * as firebase from 'firebase'
 import InteractiveMapSection from "./interactive_map_section";
 import {Grid, Container} from 'semantic-ui-react';
+import MobileMapProfile from './mobile_map_profile';
 
 class CurrentUserProfile extends Component {
   state = {
@@ -259,58 +260,75 @@ class CurrentUserProfile extends Component {
   render() {
     const { handleLogoutClick, userObject } = this.props;
     return(
-      <Grid>
-        <Grid.Row>
-          <Container>
-            <Header
-              name={userObject.displayName}
-              photoSrc={userObject.photoURL}
-              profileName={userObject.displayName}
-              handleLogoutClick={handleLogoutClick}
-              shouldRenderMyMap
-              publicProfile={this.state.publicProfile}
-              onClickUpdateProfilePrivacy={this.handleUpdateProfilePrivacy}
-              userProfileLink={this.state.userProfileLink}
-              username={this.state.username}
-            />
-          </Container>
-        </Grid.Row>
-        <Grid.Row>
-            <MyMapComponent
-              isMarkerShown
-              googleMapURL={GOOGLE_MAP_URL}
-              loadingElement={<div style={{ height: `100%`, width: `100%` }} />}
-              containerElement={<div style={{ height: `60vh`, width: `100vw`, marginLeft: `calc(-50vw + 50%)`, paddingTop: `1px` }} />}
-              mapElement={<div style={{ height: `100%`, width: `100%` }} />}
-              listOfCities={this.state.shouldRenderPlacesBeen ? this.state.placesBeen : this.state.placesToGo}
-              shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
-              shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
-              deletePlace={this.deletePlace}
-              moveToPlacesBeen={this.moveToPlacesBeen}
-              mapCenter={this.state.mapCenter}
-              shouldRenderUpdateButtons
-            />
-        </Grid.Row>
-        <Grid.Row>
-          <InteractiveMapSection
-            userObject={userObject}
-            countriesBeen={this.state.countriesBeen}
-            locationToAdd={this.state.locationToAdd}
-            handleTextChange={this.handleTextChange}
-            handleInputChange={this.handleInputChange}
-            beenToButtonClicked={this.state.beenToButtonClicked}
-            handleBeenToClick={this.handleBeenToClick}
-            wantToGoButtonClicked={this.state.wantToGoButtonClicked}
-            handleWantToGoClick={this.handleWantToGoClick}
-            handleAddLocationToDB={this.handleAddLocationToDB}
-            shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
-            handleSeePlacesBeen={this.handleSeePlacesBeen}
-            shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
-            handleSeePlacesToGo={this.handleSeePlacesToGo}
-            shouldRenderMyMap
-          />
-        </Grid.Row>
-      </Grid>
+       <MobileMapProfile
+         profilePhotoSrc={userObject.photoURL}
+         profileName={userObject.displayName}
+         handleLogoutClick={handleLogoutClick}
+         publicProfile={this.state.publicProfile}
+         onClickUpdateProfilePrivacy={this.handleUpdateProfilePrivacy}
+         userProfileLink={this.state.userProfileLink}
+         shouldRenderMyMap
+         username={this.state.username}
+         listOfCities={this.state.shouldRenderPlacesBeen ? this.state.placesBeen : this.state.placesToGo}
+         shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
+         shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
+         deletePlace={() => this.deletePlace()}
+         moveToPlacesBeen={() => this.moveToPlacesBeen()}
+         mapCenter={this.state.mapCenter}
+         countriesBeen={this.state.countriesBeen}
+       />
+      // <Grid>
+      //   <Grid.Row>
+      //     <Container>
+      //       <Header
+      //         name={userObject.displayName}
+      //         photoSrc={userObject.photoURL}
+      //         profileName={userObject.displayName}
+      //         handleLogoutClick={handleLogoutClick}
+      //         shouldRenderMyMap
+      //         publicProfile={this.state.publicProfile}
+      //         onClickUpdateProfilePrivacy={this.handleUpdateProfilePrivacy}
+      //         userProfileLink={this.state.userProfileLink}
+      //         username={this.state.username}
+      //       />
+      //     </Container>
+      //   </Grid.Row>
+      //   <Grid.Row>
+      //     <MyMapComponent
+      //       isMarkerShown
+      //       googleMapURL={GOOGLE_MAP_URL}
+      //       loadingElement={<div style={{ height: `100%`, width: `100%` }} />}
+      //       containerElement={<div style={{ height: `60vh`, width: `100vw`, marginLeft: `calc(-50vw + 50%)`, paddingTop: `1px` }} />}
+      //       mapElement={<div style={{ height: `100%`, width: `100%` }} />}
+      //       listOfCities={this.state.shouldRenderPlacesBeen ? this.state.placesBeen : this.state.placesToGo}
+      //       shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
+      //       shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
+      //       deletePlace={this.deletePlace}
+      //       moveToPlacesBeen={this.moveToPlacesBeen}
+      //       mapCenter={this.state.mapCenter}
+      //       shouldRenderUpdateButtons
+      //     />
+      //   </Grid.Row>
+      //   <Grid.Row>
+      //     <InteractiveMapSection
+      //       userObject={userObject}
+      //       countriesBeen={this.state.countriesBeen}
+      //       locationToAdd={this.state.locationToAdd}
+      //       handleTextChange={this.handleTextChange}
+      //       handleInputChange={this.handleInputChange}
+      //       beenToButtonClicked={this.state.beenToButtonClicked}
+      //       handleBeenToClick={this.handleBeenToClick}
+      //       wantToGoButtonClicked={this.state.wantToGoButtonClicked}
+      //       handleWantToGoClick={this.handleWantToGoClick}
+      //       handleAddLocationToDB={this.handleAddLocationToDB}
+      //       shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
+      //       handleSeePlacesBeen={this.handleSeePlacesBeen}
+      //       shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
+      //       handleSeePlacesToGo={this.handleSeePlacesToGo}
+      //       shouldRenderMyMap
+      //     />
+      //   </Grid.Row>
+      // </Grid>
     )
   }
 }

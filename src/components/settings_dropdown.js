@@ -6,7 +6,7 @@ import {
 } from 'semantic-ui-react';
 import {useHistory} from "react-router-dom";
 
-const settingsButton = <Button circular icon='setting' />;
+const settingsButton = <Button circular icon='setting' size='huge'/>;
 
 const copyToClipboard = (userProfileLink) => {
   navigator.clipboard.writeText(userProfileLink)

@@ -7,20 +7,12 @@ import AppRouting from "./components/app_routing";
 const App = () => (
   <div
     className="App"
-    style={{
-      display: 'flex',
-      minHeight: '100vh',
-      flexDirection: 'column',
-    }}
   >
-    <div style={{
-      flex: 1,
-    }}>
+    <div>
       <Router>
         <AppRouting />
       </Router>
     </div>
-    <Footer />
   </div>
 );
 

@@ -7,6 +7,14 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     <GoogleMap
       defaultZoom={8}
       center={props.mapCenter}
+      options={{
+        fullscreenControl: false,
+        clickableIcons: false,
+        disableDefaultUI: false,
+        mapTypeControl: false,
+        streetViewControl: false,
+        zoomControl: false,
+      }}
     >
       { props.listOfCities.map((city) => (
         <MapInfoWindowComponent

@@ -40,7 +40,7 @@ export default function useAddressPredictions(input) {
 
   useEffect(() => {
     debouncedGetPlacePredictions(input);
-  }, [input]);
+  }, [debouncedGetPlacePredictions, input]);
 
   return predictions;
 }

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Marker, InfoWindow} from "react-google-maps"
-import { Card, Button, Image } from 'semantic-ui-react'
+import { Card, Button, Image, Label } from 'semantic-ui-react'
 
 const splitCity = fullName => {
   const namePieces = fullName.split(', ')
@@ -19,6 +19,9 @@ const InfoWindowCard = ({city, country, deletePlace, cityObj, imgUrl, isPlaceToG
         {!!imgUrl && (
           <Image src={imgUrl} wrapped rounded size='medium' />
         )}
+        <Label>
+          {cityObj.label}
+        </Label>
       </Card.Description>
       {shouldRenderUpdateButtons &&
         <Card.Content extra>

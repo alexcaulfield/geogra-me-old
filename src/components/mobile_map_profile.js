@@ -4,11 +4,13 @@ import {Label, Modal, Button, Icon} from 'semantic-ui-react';
 import { USERS_COLLECTION, GOOGLE_MAP_URL, SITE_URL } from './../utils';
 import SettingsDropdown from "./settings_dropdown";
 import TravelStatsCard from "./travel_stats_card";
+import AddPinContainer from './add_pin_container';
 
 const MobileMapProfile = props => {
-  const [addPinModalOpen, setAddPinModalOpen] = useState(false);
   return (
-    <>
+    <div
+      style={{position: 'relative'}}
+    >
       <div
         style={{
           position: 'absolute',
@@ -17,7 +19,7 @@ const MobileMapProfile = props => {
           zIndex: 100,
         }}
       >
-        <Label image size='huge'>
+        <Label image size='huge' color='blue'>
           <img src={props.profilePhotoSrc} />
           {props.shouldRenderMyMap ? 'My Map' : `${props.profileName}`}
         </Label>
@@ -25,7 +27,7 @@ const MobileMapProfile = props => {
       <div
         style={{
           position: 'absolute',
-          left: '82vw',
+          right: '8px',
           marginTop: '8px',
           zIndex: 100,
         }}
@@ -67,33 +69,16 @@ const MobileMapProfile = props => {
           countriesBeen={props.countriesBeen}
         />
       </div>
-        <Modal
-          size='tiny'
-          onClose={() => setAddPinModalOpen(false)}
-          onOpen={() => setAddPinModalOpen(true)}
-          open={addPinModalOpen}
-          trigger={
-            <div
-              style={{
-                position: 'absolute',
-                top: '85vh',
-                right: '25vw',
-                zIndex: 100,
-                width: '25px'
-              }}
-            >
-              <Button circular size='huge'>
-                Add Pin
-              </Button>
-            </div>
-          }
-        >
-          <Modal.Header>Add a Pin to your map!</Modal.Header>
-          <Modal.Content>
-            <p>Where would you like to add?</p>
-          </Modal.Content>
-        </Modal>
-    </>
+      <AddPinContainer
+        addPinModalOpen={props.addPinModalOpen}
+        setAddPinModalOpen={props.setAddPinModalOpen}
+        locationToAdd={props.locationToAdd}
+        handleInputChange={props.handleInputChange}
+        handleTextChange={props.handleTextChange}
+        handleAddLocationToDB={props.handleAddLocationToDB}
+        handlePinLabelSelect={props.handlePinLabelSelect}
+      />
+    </div>
   )
 }
 

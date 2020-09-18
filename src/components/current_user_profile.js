@@ -29,6 +29,8 @@ class CurrentUserProfile extends Component {
       lat: 42.3601,
       lng: -71.0589
     },
+    pinLabel: '',
+    addPinModalOpen: false,
   };
 
   componentDidMount() {
@@ -45,6 +47,8 @@ class CurrentUserProfile extends Component {
           countriesBeen: data.countriesBeen.length,
           userProfileLink: `${SITE_URL}/profile/${data.username}`,
           username: data.username,
+          addPinModalOpen: false,
+          pinLabel: '',
         })
       } else {
         console.log(`there was an error in fetching data for user ${this.state.userDocIdentifier}`)
@@ -77,6 +81,7 @@ class CurrentUserProfile extends Component {
               },
               placeId: locationObj.place_id,
               country: country,
+              label: this.state.pinLabel,
             }),
             countriesBeen: firebase.firestore.FieldValue.arrayUnion(country),
           }
@@ -89,6 +94,7 @@ class CurrentUserProfile extends Component {
                 lng,
               },
               placeId: locationObj.place_id,
+              label: this.state.pinLabel,
             })
           }
         }
@@ -256,11 +262,35 @@ class CurrentUserProfile extends Component {
     })
   };
 
+  handlePinLabelSelect = (e, dropdown) => {
+    if (dropdown.value === 'Been To' || dropdown.value === 'Lived') {
+      this.handleBeenToClick();
+    } else {
+      this.handleWantToGoClick();
+    }
+
+    this.setState({
+      pinLabel: dropdown.value,
+    })
+  }
+
+  setAddPinModalOpen = openValue => {
+    this.setState({
+      addPinModalOpen: openValue,
+    })
+  }
   
   render() {
     const { handleLogoutClick, userObject } = this.props;
     return(
        <MobileMapProfile
+         locationToAdd={this.state.locationToAdd}
+         handleInputChange={this.handleInputChange}
+         handleTextChange={this.handleTextChange}
+         handleAddLocationToDB={this.handleAddLocationToDB}
+         handlePinLabelSelect={this.handlePinLabelSelect}
+         addPinModalOpen={this.state.addPinModalOpen}
+         setAddPinModalOpen={this.setAddPinModalOpen}
          profilePhotoSrc={userObject.photoURL}
          profileName={userObject.displayName}
          handleLogoutClick={handleLogoutClick}
@@ -272,8 +302,8 @@ class CurrentUserProfile extends Component {
          listOfCities={this.state.shouldRenderPlacesBeen ? this.state.placesBeen : this.state.placesToGo}
          shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
          shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
-         deletePlace={() => this.deletePlace()}
-         moveToPlacesBeen={() => this.moveToPlacesBeen()}
+         deletePlace={this.deletePlace}
+         moveToPlacesBeen={this.moveToPlacesBeen}
          mapCenter={this.state.mapCenter}
          countriesBeen={this.state.countriesBeen}
        />

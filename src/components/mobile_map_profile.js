@@ -77,6 +77,9 @@ const MobileMapProfile = props => {
         handleTextChange={props.handleTextChange}
         handleAddLocationToDB={props.handleAddLocationToDB}
         handlePinLabelSelect={props.handlePinLabelSelect}
+        handleMonthSelect={props.handleMonthSelect}
+        handleYearSelect={props.handleYearSelect}
+        handleSetComment={props.handleSetComment}
       />
     </div>
   )

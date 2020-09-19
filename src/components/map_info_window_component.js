@@ -2,6 +2,15 @@ import React, {useState} from 'react'
 import {Marker, InfoWindow} from "react-google-maps"
 import { Card, Button, Image, Label } from 'semantic-ui-react'
 
+const PIN_URLS = {
+  'Been To': 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+  'Want To Go': 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+  'Lived': 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+  'Family': 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png',
+  'Friends': 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+  'Born': '',
+}
+
 const splitCity = fullName => {
   const namePieces = fullName.split(', ')
   if (namePieces.length > 1) {
@@ -19,9 +28,19 @@ const InfoWindowCard = ({city, country, deletePlace, cityObj, imgUrl, isPlaceToG
         {!!imgUrl && (
           <Image src={imgUrl} wrapped rounded size='medium' />
         )}
-        <Label>
-          {cityObj.label}
-        </Label>
+        {!!cityObj.label && (
+          <Label>
+            {cityObj.label}
+          </Label>
+        )}
+        {!!cityObj.monthVisited && !!cityObj.yearVisited && (
+          <Label>
+            {cityObj.monthVisited} {cityObj.yearVisited}
+          </Label>
+        )}
+        {!!cityObj.comment && (
+          <p>{cityObj.comment}</p>
+        )}
       </Card.Description>
       {shouldRenderUpdateButtons &&
         <Card.Content extra>
@@ -66,6 +85,7 @@ const MapInfoWindowComponent = ({city, deletePlace, shouldRenderPlacesBeen, shou
     <Marker
       position={city.location}
       onClick={getPlaceData}
+      icon={PIN_URLS[city.label]}
     >
       {isOpen && (
         <InfoWindow onCloseClick={() => {setIsOpen(false)}}>

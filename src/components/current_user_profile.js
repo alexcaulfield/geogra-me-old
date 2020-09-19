@@ -31,6 +31,9 @@ class CurrentUserProfile extends Component {
     },
     pinLabel: '',
     addPinModalOpen: false,
+    monthVisited: '',
+    yearVisited: null,
+    pinComment: '',
   };
 
   componentDidMount() {
@@ -49,6 +52,9 @@ class CurrentUserProfile extends Component {
           username: data.username,
           addPinModalOpen: false,
           pinLabel: '',
+          monthVisited: '',
+          yearVisited: null,
+          pinComment: '',
         })
       } else {
         console.log(`there was an error in fetching data for user ${this.state.userDocIdentifier}`)
@@ -82,6 +88,9 @@ class CurrentUserProfile extends Component {
               placeId: locationObj.place_id,
               country: country,
               label: this.state.pinLabel,
+              monthVisited: this.state.monthVisited,
+              yearVisited: this.state.yearVisited,
+              comment: this.state.pinComment,
             }),
             countriesBeen: firebase.firestore.FieldValue.arrayUnion(country),
           }
@@ -95,6 +104,9 @@ class CurrentUserProfile extends Component {
               },
               placeId: locationObj.place_id,
               label: this.state.pinLabel,
+              monthVisited: this.state.monthVisited,
+              yearVisited: this.state.yearVisited,
+              comment: this.state.pinComment,
             })
           }
         }
@@ -279,6 +291,24 @@ class CurrentUserProfile extends Component {
       addPinModalOpen: openValue,
     })
   }
+
+  handleMonthSelect = (e, dropdown) => {
+    this.setState({
+      monthVisited: dropdown.value,
+    })
+  }
+
+  handleYearSelect = (e, dropdown) => {
+    this.setState({
+      yearVisited: dropdown.value,
+    })
+  }
+
+  handleSetComment = (e, text) => {
+    this.setState({
+      pinComment: text.value,
+    })
+  }
   
   render() {
     const { handleLogoutClick, userObject } = this.props;
@@ -291,6 +321,9 @@ class CurrentUserProfile extends Component {
          handlePinLabelSelect={this.handlePinLabelSelect}
          addPinModalOpen={this.state.addPinModalOpen}
          setAddPinModalOpen={this.setAddPinModalOpen}
+         handleMonthSelect={this.handleMonthSelect}
+         handleYearSelect={this.handleYearSelect}
+         handleSetComment={this.handleSetComment}
          profilePhotoSrc={userObject.photoURL}
          profileName={userObject.displayName}
          handleLogoutClick={handleLogoutClick}
@@ -299,7 +332,7 @@ class CurrentUserProfile extends Component {
          userProfileLink={this.state.userProfileLink}
          shouldRenderMyMap
          username={this.state.username}
-         listOfCities={this.state.shouldRenderPlacesBeen ? this.state.placesBeen : this.state.placesToGo}
+         listOfCities={[...this.state.placesBeen, ...this.state.placesToGo]}
          shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
          shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
          deletePlace={this.deletePlace}

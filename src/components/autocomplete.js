@@ -12,7 +12,7 @@ const Autocomplete = ({
     <div style={{
       paddingBottom: '10px',
       margin: '0 auto',
-      width: '80%',
+      width: '100%',
     }}>
       <Dropdown
         placeholder='Search for a Place'

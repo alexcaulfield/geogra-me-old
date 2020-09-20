@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import MyMapComponent from './map_component';
-import Header from './header';
+// import MyMapComponent from './map_component';
+// import Header from './header';
 import {db} from './../fire-config'
 import { USERS_COLLECTION, GOOGLE_MAP_URL, SITE_URL } from './../utils'
 import {geocodeByAddress, getLatLng} from 'react-places-autocomplete'
 import * as firebase from 'firebase'
-import InteractiveMapSection from "./interactive_map_section";
-import {Grid, Container} from 'semantic-ui-react';
-import MobileMapProfile from './mobile_map_profile';
+// import InteractiveMapSection from "./interactive_map_section";
+// import {Grid, Container} from 'semantic-ui-react';
+import FluidMapProfile from './fluid_map_profile';
 
 class CurrentUserProfile extends Component {
   state = {
@@ -34,6 +34,7 @@ class CurrentUserProfile extends Component {
     monthVisited: '',
     yearVisited: null,
     pinComment: '',
+    displayDateVisited: false,
   };
 
   componentDidMount() {
@@ -237,6 +238,7 @@ class CurrentUserProfile extends Component {
     this.setState({
       beenToButtonClicked: true,
       wantToGoButtonClicked: false,
+      displayDateVisited: true,
     })
   };
 
@@ -244,6 +246,7 @@ class CurrentUserProfile extends Component {
     this.setState({
       beenToButtonClicked: false,
       wantToGoButtonClicked: true,
+      displayDateVisited: false,
     })
   }
 
@@ -275,7 +278,7 @@ class CurrentUserProfile extends Component {
   };
 
   handlePinLabelSelect = (e, dropdown) => {
-    if (dropdown.value === 'Been To' || dropdown.value === 'Lived') {
+    if (dropdown.value === 'Been To' || dropdown.value === 'Lived' || dropdown.value === 'Born') {
       this.handleBeenToClick();
     } else {
       this.handleWantToGoClick();
@@ -313,7 +316,7 @@ class CurrentUserProfile extends Component {
   render() {
     const { handleLogoutClick, userObject } = this.props;
     return(
-       <MobileMapProfile
+       <FluidMapProfile
          locationToAdd={this.state.locationToAdd}
          handleInputChange={this.handleInputChange}
          handleTextChange={this.handleTextChange}
@@ -323,6 +326,7 @@ class CurrentUserProfile extends Component {
          setAddPinModalOpen={this.setAddPinModalOpen}
          handleMonthSelect={this.handleMonthSelect}
          handleYearSelect={this.handleYearSelect}
+         displayDateVisited={this.state.displayDateVisited}
          handleSetComment={this.handleSetComment}
          profilePhotoSrc={userObject.photoURL}
          profileName={userObject.displayName}
@@ -339,6 +343,7 @@ class CurrentUserProfile extends Component {
          moveToPlacesBeen={this.moveToPlacesBeen}
          mapCenter={this.state.mapCenter}
          countriesBeen={this.state.countriesBeen}
+         shouldRenderUpdateButtons
        />
       // <Grid>
       //   <Grid.Row>

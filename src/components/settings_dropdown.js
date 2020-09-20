@@ -14,8 +14,8 @@ const copyToClipboard = (userProfileLink) => {
 
 const SettingsDropdown = ({
   handleLogoutClick,
-  publicProfile,
-  onClickUpdateProfilePrivacy,
+  // publicProfile,
+  // onClickUpdateProfilePrivacy,
   userProfileLink,
   username,
   renderPersonalProfileSettings,
@@ -40,18 +40,18 @@ const SettingsDropdown = ({
               icon='copy'
               onClick={copyToClipboard(userProfileLink)}
             />
-            <Dropdown.Item
-              text='Make Profile Public'
-              icon='lock open'
-              active={publicProfile}
-              onClick={onClickUpdateProfilePrivacy}
-            />
-            <Dropdown.Item
-              text='Make Profile Private'
-              icon='lock'
-              active={!publicProfile}
-              onClick={onClickUpdateProfilePrivacy}
-            />
+            {/*<Dropdown.Item*/}
+            {/*  text='Make Profile Public'*/}
+            {/*  icon='lock open'*/}
+            {/*  active={publicProfile}*/}
+            {/*  onClick={onClickUpdateProfilePrivacy}*/}
+            {/*/>*/}
+            {/*<Dropdown.Item*/}
+            {/*  text='Make Profile Private'*/}
+            {/*  icon='lock'*/}
+            {/*  active={!publicProfile}*/}
+            {/*  onClick={onClickUpdateProfilePrivacy}*/}
+            {/*/>*/}
           </>
         )}
         {!renderPersonalProfileSettings && (

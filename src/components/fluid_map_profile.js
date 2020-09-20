@@ -1,4 +1,7 @@
-import React, {useState} from 'react';
+/**
+ * New Map UI that displays the map full width on the user's display
+ */
+import React from 'react';
 import MyMapComponent from './map_component';
 import {Label, Modal, Button, Icon} from 'semantic-ui-react';
 import { USERS_COLLECTION, GOOGLE_MAP_URL, SITE_URL } from './../utils';
@@ -6,7 +9,7 @@ import SettingsDropdown from "./settings_dropdown";
 import TravelStatsCard from "./travel_stats_card";
 import AddPinContainer from './add_pin_container';
 
-const MobileMapProfile = props => {
+const FluidMapProfile = props => {
   return (
     <div
       style={{position: 'relative'}}
@@ -53,7 +56,7 @@ const MobileMapProfile = props => {
         deletePlace={props.deletePlace}
         moveToPlacesBeen={props.moveToPlacesBeen}
         mapCenter={props.mapCenter}
-        shouldRenderUpdateButtons
+        shouldRenderUpdateButtons={props.shouldRenderUpdateButtons}
       />
       <div
         style={{
@@ -69,20 +72,23 @@ const MobileMapProfile = props => {
           countriesBeen={props.countriesBeen}
         />
       </div>
-      <AddPinContainer
-        addPinModalOpen={props.addPinModalOpen}
-        setAddPinModalOpen={props.setAddPinModalOpen}
-        locationToAdd={props.locationToAdd}
-        handleInputChange={props.handleInputChange}
-        handleTextChange={props.handleTextChange}
-        handleAddLocationToDB={props.handleAddLocationToDB}
-        handlePinLabelSelect={props.handlePinLabelSelect}
-        handleMonthSelect={props.handleMonthSelect}
-        handleYearSelect={props.handleYearSelect}
-        handleSetComment={props.handleSetComment}
-      />
+      {props.shouldRenderMyMap && (
+        <AddPinContainer
+          addPinModalOpen={props.addPinModalOpen}
+          setAddPinModalOpen={props.setAddPinModalOpen}
+          locationToAdd={props.locationToAdd}
+          handleInputChange={props.handleInputChange}
+          handleTextChange={props.handleTextChange}
+          handleAddLocationToDB={props.handleAddLocationToDB}
+          handlePinLabelSelect={props.handlePinLabelSelect}
+          handleMonthSelect={props.handleMonthSelect}
+          handleYearSelect={props.handleYearSelect}
+          handleSetComment={props.handleSetComment}
+          displayDateVisited={props.displayDateVisited}
+        />
+      )}
     </div>
   )
 }
 
-export default MobileMapProfile;
+export default FluidMapProfile;

@@ -219,7 +219,7 @@ const AddPinContainer = props => {
           style={{
             position: 'absolute',
             top: '85vh',
-            right: '25vw',
+            right: '100px',
             zIndex: 100,
             width: '25px'
           }}
@@ -239,32 +239,12 @@ const AddPinContainer = props => {
             onChange={props.handleTextChange}
             onSearchChange={props.handleInputChange}
           />
-          <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '8px'}}>
-            <div style={{minWidth: '48%', display: 'inline-flex'}}>
-              <Dropdown
-                placeholder='Month Visited'
-                fluid
-                selection
-                options={MONTHS}
-                onChange={props.handleMonthSelect}
-              />
-            </div>
-            <div style={{minWidth: '48%', display: 'inline-flex'}}>
-              <Dropdown
-                placeholder='Year Visited'
-                fluid
-                selection
-                options={YEARS}
-                onChange={props.handleYearSelect}
-              />
-            </div>
-          </div>
           <div style={{marginBottom: '8px'}}>
             <Form>
               <TextArea placeholder='Write a comment about this place' onChange={props.handleSetComment} />
             </Form>
           </div>
-          <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '8px'}}>
             <div style={{minWidth: '60%', display: 'inline-flex'}}>
               <Dropdown
                 placeholder='Pin Label'
@@ -280,7 +260,28 @@ const AddPinContainer = props => {
               </Button>
             </div>
           </div>
-
+          {props.displayDateVisited && (
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+              <div style={{minWidth: '48%', display: 'inline-flex'}}>
+                <Dropdown
+                  placeholder='Month Visited'
+                  fluid
+                  selection
+                  options={MONTHS}
+                  onChange={props.handleMonthSelect}
+                />
+              </div>
+              <div style={{minWidth: '48%', display: 'inline-flex'}}>
+                <Dropdown
+                  placeholder='Year Visited'
+                  fluid
+                  selection
+                  options={YEARS}
+                  onChange={props.handleYearSelect}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </Modal.Content>
     </Modal>

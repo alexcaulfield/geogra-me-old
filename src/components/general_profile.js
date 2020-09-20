@@ -10,6 +10,7 @@ import MyMapComponent from "./map_component";
 import TravelStatsCard from './travel_stats_card';
 import {Button, Container, Grid, Icon} from 'semantic-ui-react';
 import BasicHeader from "./basic_header";
+import FluidMapProfile from './fluid_map_profile';
 
 class GeneralProfile extends Component {
   state = {
@@ -48,6 +49,7 @@ class GeneralProfile extends Component {
           }
           if (data.publicProfile) {
             const newCenter = data.placesBeen.length > 0 ? data.placesBeen[0].location : _thisRef.state.mapCenter;
+            console.log(data)
             _thisRef.setState({
               profileName: data.name,
               placesBeen: data.placesBeen,
@@ -127,39 +129,58 @@ class GeneralProfile extends Component {
         </>
       );
     } else if (this.state.publicProfile) {
+      console.log(this.props.currentUser)
       return (
-        <Grid>
-          <Grid.Row>
-            <Container>
-              <Header
-                name={this.props.currentUser.displayName}
-                photoSrc={this.props.currentUser.photoURL}
-                profileName={this.state.profileName}
-                handleLogoutClick={this.props.handleLogoutClick}
-                shouldRenderMyMap={false}
-              />
-            </Container>
-          </Grid.Row>
-          <Grid.Row>
-            <MyMapComponent
-              isMarkerShown
-              googleMapURL={GOOGLE_MAP_URL}
-              loadingElement={<div style={{ height: `100%`, width: `100%` }} />}
-              containerElement={<div style={{ height: `60vh`, width: `100vw`, marginLeft: `calc(-50vw + 50%)`, paddingTop: `1px` }} />}
-              mapElement={<div style={{ height: `100%`, width: `100%` }} />}
-              listOfCities={this.state.placesBeen}
-              shouldRenderPlacesBeen
-              mapCenter={this.state.mapCenter}
-              shouldRenderUpdateButtons={false}
-            />
-          </Grid.Row>
-          <Grid.Row centered>
-            <TravelStatsCard
-              name={`${this.state.profileName}'s`}
-              countriesBeen={this.state.countriesBeen}
-            />
-          </Grid.Row>
-        </Grid>
+        <FluidMapProfile
+          profileName={this.state.profileName}
+          username={this.props.currentUser.email}
+          handleLogoutClick={this.props.handleLogoutClick}
+          publicProfile={this.state.publicProfile}
+          onClickUpdateProfilePrivacy={this.handleUpdateProfilePrivacy}
+          userProfileLink={this.state.userProfileLink}
+          shouldRenderMyMap={false}
+          username={this.state.username}
+          listOfCities={[...this.state.placesBeen, ...this.state.placesToGo]}
+          shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
+          shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
+          deletePlace={this.deletePlace}
+          moveToPlacesBeen={this.moveToPlacesBeen}
+          mapCenter={this.state.mapCenter}
+          countriesBeen={this.state.countriesBeen}
+          shouldRenderUpdateButtons={false}
+        />
+        // <Grid>
+        //   <Grid.Row>
+        //     <Container>
+        //       <Header
+        //         name={this.props.currentUser.displayName}
+        //         photoSrc={this.props.currentUser.photoURL}
+        //         profileName={this.state.profileName}
+        //         handleLogoutClick={this.props.handleLogoutClick}
+        //         shouldRenderMyMap={false}
+        //       />
+        //     </Container>
+        //   </Grid.Row>
+        //   <Grid.Row>
+        //     <MyMapComponent
+        //       isMarkerShown
+        //       googleMapURL={GOOGLE_MAP_URL}
+        //       loadingElement={<div style={{ height: `100%`, width: `100%` }} />}
+        //       containerElement={<div style={{ height: `60vh`, width: `100vw`, marginLeft: `calc(-50vw + 50%)`, paddingTop: `1px` }} />}
+        //       mapElement={<div style={{ height: `100%`, width: `100%` }} />}
+        //       listOfCities={this.state.placesBeen}
+        //       shouldRenderPlacesBeen
+        //       mapCenter={this.state.mapCenter}
+        //       shouldRenderUpdateButtons={false}
+        //     />
+        //   </Grid.Row>
+        //   <Grid.Row centered>
+        //     <TravelStatsCard
+        //       name={`${this.state.profileName}'s`}
+        //       countriesBeen={this.state.countriesBeen}
+        //     />
+        //   </Grid.Row>
+        // </Grid>
       )
     }
   };

@@ -75,7 +75,9 @@ const MapInfoWindowComponent = ({city, deletePlace, shouldRenderPlacesBeen, shou
         placeId: city.placeId,
       }, (place, status) => {
         if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-          setLocationImageUrl(place.photos[0].getUrl())
+          if (place.photos) {
+            setLocationImageUrl(place.photos[0].getUrl())
+          }
         }
       })
     }

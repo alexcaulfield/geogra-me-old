@@ -332,8 +332,20 @@ class CurrentUserProfile extends Component {
 
   filterPlaces = () => {
     // display legacy pin objects without labels
-    const placesBeen = this.state.placesBeen.map(place => ({...place, label: 'Been To'}))
-    const placesToGo = this.state.placesToGo.map(place => ({...place, label: 'Want To Go'}))
+    const placesBeen = this.state.placesBeen.map(place => {
+      if (place.label) {
+        return place;
+      } else {
+        return {...place, label: 'Been To'}
+      }
+    })
+    const placesToGo = this.state.placesToGo.map(place => {
+      if (place.label) {
+        return place;
+      } else {
+        return {...place, label: 'Want To Go'}
+      }
+    })
     // display all pins if no filters are selected
     if (this.state.pinFilters.length === 0) {
       return [...placesBeen, ...placesToGo]

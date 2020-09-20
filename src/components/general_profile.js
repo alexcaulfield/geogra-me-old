@@ -8,7 +8,7 @@ import {Link, withRouter} from "react-router-dom";
 import LoadingPage from "./loading_page";
 // import MyMapComponent from "./map_component";
 // import TravelStatsCard from './travel_stats_card';
-import {Button, Container, Grid, Icon} from 'semantic-ui-react';
+import {Button, Icon} from 'semantic-ui-react';
 import BasicHeader from "./basic_header";
 import FluidMapProfile from './fluid_map_profile';
 
@@ -165,7 +165,6 @@ class GeneralProfile extends Component {
           onClickUpdateProfilePrivacy={this.handleUpdateProfilePrivacy}
           userProfileLink={this.state.userProfileLink}
           shouldRenderMyMap={false}
-          username={this.state.username}
           listOfCities={this.filterPlaces()}
           shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
           shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}

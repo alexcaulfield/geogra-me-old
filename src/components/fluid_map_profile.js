@@ -65,7 +65,7 @@ const FluidMapProfile = props => {
         style={{
           position: 'absolute',
           marginLeft: '12px',
-          top: '80vh',
+          top: '70vh',
           width: '40vw',
           zIndex: 100,
         }}

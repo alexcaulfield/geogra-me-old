@@ -218,7 +218,7 @@ const AddPinContainer = props => {
         <div
           style={{
             position: 'absolute',
-            top: '85vh',
+            top: '75vh',
             right: '100px',
             zIndex: 100,
             width: '25px'

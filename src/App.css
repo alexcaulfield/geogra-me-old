@@ -1,5 +1,13 @@
 .App {
   text-align: center;
+  bottom: 0;
+  display: flex;
+  flex-flow: row nowrap;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
 }
 
 .App-logo {

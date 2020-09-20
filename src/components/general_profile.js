@@ -94,12 +94,17 @@ class GeneralProfile extends Component {
   }
 
   filterPlaces = () => {
+    // display legacy pin objects without labels
+    const placesBeen = this.state.placesBeen.map(place => ({...place, label: 'Been To'}))
+    const placesToGo = this.state.placesBeen.map(place => ({...place, label: 'Want To Go'}))
+    // display all pins if no filters are selected
     if (this.state.pinFilters.length === 0) {
-      return [...this.state.placesBeen, ...this.state.placesToGo]
+      return [...placesBeen, ...placesToGo]
     }
-    const placesBeen = this.state.placesBeen.filter(place => this.state.pinFilters.includes(place.label))
-    const placesToGo = this.state.placesToGo.filter(place => this.state.pinFilters.includes(place.label))
-    return [...placesBeen, ...placesToGo]
+    // otherwise filter all pins
+    const filteredPlacesBeen = placesBeen.filter(place => this.state.pinFilters.includes(place.label))
+    const filteredPlacesToGo = placesToGo.filter(place => this.state.pinFilters.includes(place.label))
+    return [...filteredPlacesBeen, ...filteredPlacesToGo]
   }
 
   renderPageComponent = () => {

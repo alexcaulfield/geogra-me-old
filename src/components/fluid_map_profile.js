@@ -22,7 +22,7 @@ const FluidMapProfile = props => {
         }}
       >
         <Label image size='huge' color='blue'>
-          <img alt={props.profileName} src={props.profilePhotoSrc} />
+          {props.profilePhotoSrc && <img alt={props.profileName} src={props.profilePhotoSrc} />}
           {props.shouldRenderMyMap ? 'My Map' : `${props.profileName}`}
         </Label>
       </div>

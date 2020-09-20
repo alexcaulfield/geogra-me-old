@@ -3,11 +3,11 @@ import {db} from './../fire-config'
 import { USERS_COLLECTION } from './../utils'
 import ErrorMessage from "./error_message";
 import {Link, withRouter} from "react-router-dom";
-import {GOOGLE_MAP_URL} from './../utils';
-import Header from "./header";
+// import {GOOGLE_MAP_URL} from './../utils';
+// import Header from "./header";
 import LoadingPage from "./loading_page";
-import MyMapComponent from "./map_component";
-import TravelStatsCard from './travel_stats_card';
+// import MyMapComponent from "./map_component";
+// import TravelStatsCard from './travel_stats_card';
 import {Button, Container, Grid, Icon} from 'semantic-ui-react';
 import BasicHeader from "./basic_header";
 import FluidMapProfile from './fluid_map_profile';
@@ -26,6 +26,7 @@ class GeneralProfile extends Component {
       lat: 42.3601,
       lng: -71.0589
     },
+    pinFilters: [],
   };
 
   componentDidMount() {
@@ -75,6 +76,31 @@ class GeneralProfile extends Component {
         })
       });
   };
+
+  setPinFilters = (e, checkbox) => {
+    if (checkbox.checked) {
+      this.setState(prevState => {
+        return {
+          pinFilters: [...prevState.pinFilters, checkbox.label]
+        }
+      })
+    } else {
+      this.setState(prevState => {
+        return {
+          pinFilters: prevState.pinFilters.filter(pinFilter => pinFilter !== checkbox.label)
+        }
+      })
+    }
+  }
+
+  filterPlaces = () => {
+    if (this.state.pinFilters.length === 0) {
+      return [...this.state.placesBeen, ...this.state.placesToGo]
+    }
+    const placesBeen = this.state.placesBeen.filter(place => this.state.pinFilters.includes(place.label))
+    const placesToGo = this.state.placesToGo.filter(place => this.state.pinFilters.includes(place.label))
+    return [...placesBeen, ...placesToGo]
+  }
 
   renderPageComponent = () => {
     if (Object.keys(this.props.currentUser).length === 0) {
@@ -140,7 +166,7 @@ class GeneralProfile extends Component {
           userProfileLink={this.state.userProfileLink}
           shouldRenderMyMap={false}
           username={this.state.username}
-          listOfCities={[...this.state.placesBeen, ...this.state.placesToGo]}
+          listOfCities={this.filterPlaces()}
           shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
           shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
           deletePlace={this.deletePlace}
@@ -148,6 +174,8 @@ class GeneralProfile extends Component {
           mapCenter={this.state.mapCenter}
           countriesBeen={this.state.countriesBeen}
           shouldRenderUpdateButtons={false}
+          setPinFilters={this.setPinFilters}
+          pinFilters={this.state.pinFilters}
         />
         // <Grid>
         //   <Grid.Row>

@@ -3,17 +3,16 @@
  */
 import React from 'react';
 import MyMapComponent from './map_component';
-import {Label, Modal, Button, Icon} from 'semantic-ui-react';
-import { USERS_COLLECTION, GOOGLE_MAP_URL, SITE_URL } from './../utils';
+import {Label} from 'semantic-ui-react';
+import {GOOGLE_MAP_URL} from './../utils';
 import SettingsDropdown from "./settings_dropdown";
 import TravelStatsCard from "./travel_stats_card";
 import AddPinContainer from './add_pin_container';
+import PinFilterSelectionCard from './pin_filter_selection_card';
 
 const FluidMapProfile = props => {
   return (
-    <div
-      style={{position: 'relative'}}
-    >
+    <>
       <div
         style={{
           position: 'absolute',
@@ -44,6 +43,10 @@ const FluidMapProfile = props => {
           renderPersonalProfileSettings={props.shouldRenderMyMap}
         />
       </div>
+      <PinFilterSelectionCard
+        setPinFilters={props.setPinFilters}
+        pinFilters={props.pinFilters}
+      />
       <MyMapComponent
         isMarkerShown
         googleMapURL={GOOGLE_MAP_URL}
@@ -87,7 +90,7 @@ const FluidMapProfile = props => {
           displayDateVisited={props.displayDateVisited}
         />
       )}
-    </div>
+    </>
   )
 }
 

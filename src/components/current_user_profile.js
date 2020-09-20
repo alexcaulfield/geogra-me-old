@@ -35,6 +35,7 @@ class CurrentUserProfile extends Component {
     yearVisited: null,
     pinComment: '',
     displayDateVisited: false,
+    pinFilters: [],
   };
 
   componentDidMount() {
@@ -312,6 +313,31 @@ class CurrentUserProfile extends Component {
       pinComment: text.value,
     })
   }
+
+  setPinFilters = (e, checkbox) => {
+    if (checkbox.checked) {
+      this.setState(prevState => {
+        return {
+          pinFilters: [...prevState.pinFilters, checkbox.label]
+        }
+      })
+    } else {
+      this.setState(prevState => {
+        return {
+          pinFilters: prevState.pinFilters.filter(pinFilter => pinFilter !== checkbox.label)
+        }
+      })
+    }
+  }
+
+  filterPlaces = () => {
+    if (this.state.pinFilters.length === 0) {
+      return [...this.state.placesBeen, ...this.state.placesToGo]
+    }
+    const placesBeen = this.state.placesBeen.filter(place => this.state.pinFilters.includes(place.label))
+    const placesToGo = this.state.placesToGo.filter(place => this.state.pinFilters.includes(place.label))
+    return [...placesBeen, ...placesToGo]
+  }
   
   render() {
     const { handleLogoutClick, userObject } = this.props;
@@ -336,7 +362,7 @@ class CurrentUserProfile extends Component {
          userProfileLink={this.state.userProfileLink}
          shouldRenderMyMap
          username={this.state.username}
-         listOfCities={[...this.state.placesBeen, ...this.state.placesToGo]}
+         listOfCities={this.filterPlaces()}
          shouldRenderPlacesBeen={this.state.shouldRenderPlacesBeen}
          shouldRenderPlacesToGo={this.state.shouldRenderPlacesToGo}
          deletePlace={this.deletePlace}
@@ -344,6 +370,8 @@ class CurrentUserProfile extends Component {
          mapCenter={this.state.mapCenter}
          countriesBeen={this.state.countriesBeen}
          shouldRenderUpdateButtons
+         setPinFilters={this.setPinFilters}
+         pinFilters={this.state.pinFilters}
        />
       // <Grid>
       //   <Grid.Row>

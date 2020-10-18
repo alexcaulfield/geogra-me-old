@@ -3,7 +3,7 @@
 Live at [geogra.me](https://geogra.me)!
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d6c82426-b297-4a27-85fd-ea909a057288/deploy-status)](https://app.netlify.com/sites/affectionate-saha-16faca/deploys)
 
-A platform for you to create a push-pin map, and take it with you wherever you go
+A platform for you to create a push-pin map, and take it with you wherever you go. This is the original implementation, but future development has been moved to a private repo.
 
 ### Technologies used
 * React
@@ -20,6 +20,8 @@ A platform for you to create a push-pin map, and take it with you wherever you g
 * Add locations that you've been to and record the number of countries you've visited
 * Add locations you'd like to visit so you can keep track
 * Share your profile with others!
+* Save pins to separate lists and filter them on your map
+* UI optimized for both Web and Mobile
 
 ### Future Features
 * Store information about specific places to share with others (favorite spots, memories, etc)

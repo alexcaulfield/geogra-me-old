@@ -1,16 +1,17 @@
 # Geogra Me
 
 Live at [geogra.me](https://geogra.me)!
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d6c82426-b297-4a27-85fd-ea909a057288/deploy-status)](https://app.netlify.com/sites/affectionate-saha-16faca/deploys)
 
 A platform for you to create a push-pin map, and take it with you wherever you go. This is the original implementation, but future development has been moved to a private repo.
 
 ### Technologies used
 * React
-* React Router
+  * React Router
 * Semantic UI
 * Google Maps API
-* [React Google Maps](https://tomchentw.github.io/react-google-maps/)
+  * [React Google Maps](https://tomchentw.github.io/react-google-maps/)
 * Firebase
   * Login
   * Firestore Data Storage

@@ -9227,13 +9227,6 @@ react-dev-utils@^9.0.1:
     strip-ansi "5.2.0"
     text-table "0.2.0"
 
-react-device-detect@^1.11.14:
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/react-device-detect/-/react-device-detect-1.12.1.tgz#0a2e0b02dbbceff7d619c57074a9e0ebab74bb35"
-  integrity sha512-BQ7xIEHx0VqPBGEtEFJRybHnhZ1Qn3BXX8dRR3EKLRfSTKpITUw925VYCGnygZDpmgYSq5NX0IvHGhy0w7Sckg==
-  dependencies:
-    ua-parser-js "^0.7.21"
-
 react-dom@^16.8.6:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.13.1.tgz#c1bd37331a0486c078ee54c4740720993b2e0e7f"
@@ -9413,11 +9406,6 @@ react-scripts@3.0.1:
     workbox-webpack-plugin "4.2.0"
   optionalDependencies:
     fsevents "2.0.6"
-
-react-sticky-footer@^0.1.0-rc3:
-  version "0.1.0-rc3"
-  resolved "https://registry.yarnpkg.com/react-sticky-footer/-/react-sticky-footer-0.1.0-rc3.tgz#47137e332cafcf49a48561894aa410cca683b3af"
-  integrity sha512-FKXTCQxLoRhSC0ReEbpE52jqzMcLSYcSJjPQrx8spDGBDp3IWiyo7c1Slibsut4UmHLWG6UUA1sUCDmSAFU43Q==
 
 react-transition-group@^4.0.0:
   version "4.4.1"
@@ -10396,9 +10384,9 @@ sshpk@^1.7.0:
     tweetnacl "~0.14.0"
 
 ssri@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
-  integrity sha512-3Wge10hNcT1Kur4PDFwEieXSCMCJs/7WvSACcrMYrNp+b8kDL1/0wJch5Ni2WrtwEa2IO8OsVfeKIciKCDx/QA==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5"
+  integrity sha512-cepbSq/neFK7xB6A50KHN0xHDotYzq58wWCa5LeWqnPrHG8GzfEjO/4O8kpmcGW+oaxkvhEJCWgbgNk4/ZV93Q==
   dependencies:
     figgy-pudding "^3.5.1"
 
@@ -10971,7 +10959,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-ua-parser-js@^0.7.18, ua-parser-js@^0.7.21:
+ua-parser-js@^0.7.18:
   version "0.7.21"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.21.tgz#853cf9ce93f642f67174273cc34565ae6f308777"
   integrity sha512-+O8/qh/Qj8CgC6eYBVBykMrNtp5Gebn4dlGD/kKXVkJNDwyrAwSIqwz8CDf+tsAIWVycKcku6gIXJ0qwx/ZXaQ==
